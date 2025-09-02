@@ -4,11 +4,12 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>LuxuryStays - Premium Hotel Booking</title>
+    <!-- Bootstrap CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <!-- Font Awesome -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-    <!-- <link rel="stylesheet" href="book.css"> -->
-    
-<style>
-     * {
+    <style>
+        * {
             margin: 0;
             padding: 0;
             box-sizing: border-box;
@@ -16,25 +17,29 @@
         }
 
         :root {
-            --primary: #1a56db;
-            --primary-dark: #1e3a8a;
-            --secondary: #ea580c;
-            --accent: #db2777;
-            --light: #f8fafc;
-            --dark: #1e293b;
-            --success: #059669;
-            --warning: #d97706;
-            --gray: #94a3b8;
-            --light-gray: #e2e8f0;
-            --shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1);
+            --primary: #3a0ca3;
+            --primary-dark: #280680;
+            --secondary: #f72585;
+            --accent: #4cc9f0;
+            --light: #f8f9fa;
+            --dark: #212529;
+            --success: #2ec4b6;
+            --warning: #ff9f1c;
+            --gray: #6c757d;
+            --light-gray: #e9ecef;
+            --shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
             --transition: all 0.3s ease;
         }
 
         body {
-            background: linear-gradient(135deg, #f0f9ff 0%, #e0f2fe 100%);
+            background: linear-gradient(135deg, #f0f8ff 0%, #e6f7ff 100%);
             color: var(--dark);
             line-height: 1.6;
             min-height: 100vh;
+        }
+
+        .user-theme {
+            background: linear-gradient(135deg, #f8f9fa 0%, #e9ecef 100%);
         }
 
         .container {
@@ -129,7 +134,7 @@
 
         .btn-primary:hover {
             transform: translateY(-2px);
-            box-shadow: 0 20px 25px -5px rgba(37, 99, 235, 0.2);
+            box-shadow: 0 20px 25px -5px rgba(58, 12, 163, 0.2);
         }
 
         .btn-outline {
@@ -255,7 +260,7 @@
         .form-control:focus {
             outline: none;
             border-color: var(--primary);
-            box-shadow: 0 0 0 3px rgba(37, 99, 235, 0.2);
+            box-shadow: 0 0 0 3px rgba(58, 12, 163, 0.2);
         }
 
         .search-btn {
@@ -274,7 +279,7 @@
 
         .search-btn:hover {
             transform: translateY(-2px);
-            box-shadow: 0 20px 25px -5px rgba(249, 115, 22, 0.3);
+            box-shadow: 0 20px 25px -5px rgba(247, 37, 133, 0.3);
         }
 
         /* Page Sections */
@@ -853,11 +858,94 @@
             display: inline-block;
             margin-bottom: 1rem;
         }
-        </style>
 
+        /* User Dashboard Styles */
+        .dashboard-stats {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 1.5rem;
+            margin-bottom: 2rem;
+        }
+
+        .stat-card {
+            background: white;
+            border-radius: 12px;
+            padding: 1.5rem;
+            text-align: center;
+            box-shadow: var(--shadow);
+        }
+
+        .stat-number {
+            font-size: 2rem;
+            font-weight: bold;
+            color: var(--primary);
+            margin-bottom: 0.5rem;
+        }
+
+        .stat-title {
+            color: var(--gray);
+            font-size: 0.9rem;
+        }
+
+        .dashboard-action-cards {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 1.5rem;
+            margin-bottom: 2rem;
+        }
+
+        .action-card {
+            background: white;
+            border-radius: 12px;
+            padding: 1.5rem;
+            text-align: center;
+            box-shadow: var(--shadow);
+            transition: var(--transition);
+            cursor: pointer;
+        }
+
+        .action-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 15px 30px rgba(0, 0, 0, 0.1);
+        }
+
+        .action-icon {
+            font-size: 2.5rem;
+            margin-bottom: 1rem;
+            color: var(--primary);
+        }
+
+        /* Additional Ads */
+        .promo-banner {
+            background: linear-gradient(135deg, var(--primary) 0%, var(--primary-dark) 100%);
+            color: white;
+            padding: 1.5rem;
+            border-radius: 12px;
+            text-align: center;
+            margin: 2rem 0;
+        }
+
+        /* Personalization Elements */
+        .personal-welcome {
+            background: linear-gradient(135deg, var(--primary) 0%, var(--primary-dark) 100%);
+            color: white;
+            padding: 2rem;
+            border-radius: 12px;
+            margin-bottom: 2rem;
+            text-align: center;
+        }
+
+        .personal-rec {
+            background: white;
+            border-radius: 12px;
+            padding: 1.5rem;
+            margin-bottom: 2rem;
+            box-shadow: var(--shadow);
+        }
+    </style>
 </head>
 <body>
-    <!-- Headers   Navigation -->
+    <!-- Header with Navigation -->
     <header>
         <div class="container">
             <div class="header-content">
@@ -893,21 +981,21 @@
                 <div class="carousel-content">
                     <h2>Luxury Beach Resorts</h2>
                     <p>Enjoy the finest beachfront properties with stunning ocean views</p>
-                    <button class="btn btn-primary" onclick="showSection('destinations')">Explore Now</button>
+                    <button class="btn btn-primary" onclick="showSection('destinations-section')">Explore Now</button>
                 </div>
             </div>
             <div class="carousel-slide" style="background-image: url('https://images.unsplash.com/photo-1582719508461-905c673771fd?ixlib=rb-4.0.3&auto=format&fit=crop&w=1200&q=80');">
                 <div class="carousel-content">
                     <h2>City Center Hotels</h2>
                     <p>Stay in the heart of the action with our premium city hotels</p>
-                    <button class="btn btn-primary" onclick="showSection('destinations')">Explore Now</button>
+                    <button class="btn btn-primary" onclick="showSection('destinations-section')">Explore Now</button>
                 </div>
             </div>
             <div class="carousel-slide" style="background-image: url('https://images.unsplash.com/photo-1618773928121-c32242e63f39?ixlib=rb-4.0.3&auto=format&fit=crop&w=1200&q=80');">
                 <div class="carousel-content">
                     <h2>Mountain Retreats</h2>
                     <p>Escape to serene mountain locations with breathtaking views</p>
-                    <button class="btn btn-primary" onclick="showSection('destinations')">Explore Now</button>
+                    <button class="btn btn-primary" onclick="showSection('destinations-section')">Explore Now</button>
                 </div>
             </div>
         </div>
@@ -964,6 +1052,111 @@
                     <h2 id="userName">John Smith</h2>
                     <p>Welcome back to LuxuryStays</p>
                 </div>
+            </div>
+
+            <!-- Personal Welcome Section -->
+            <div class="personal-welcome">
+                <h3>Your Personalized Dashboard</h3>
+                <p>We've curated special offers just for you based on your preferences</p>
+            </div>
+
+            <!-- Dashboard Stats -->
+            <div class="dashboard-stats">
+                <div class="stat-card">
+                    <div class="stat-number">3</div>
+                    <div class="stat-title">Upcoming Trips</div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-number">12</div>
+                    <div class="stat-title">Total Bookings</div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-number">$4,250</div>
+                    <div class="stat-title">Saved with Deals</div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-number">Gold</div>
+                    <div class="stat-title">Loyalty Status</div>
+                </div>
+            </div>
+
+            <!-- Quick Actions -->
+            <div class="dashboard-action-cards">
+                <div class="action-card" onclick="showSection('destinations-section')">
+                    <div class="action-icon">
+                        <i class="fas fa-search"></i>
+                    </div>
+                    <h4>Find Hotels</h4>
+                    <p>Discover your next perfect stay</p>
+                </div>
+                <div class="action-card" onclick="showDashboardTab('bookings')">
+                    <div class="action-icon">
+                        <i class="fas fa-calendar"></i>
+                    </div>
+                    <h4>My Bookings</h4>
+                    <p>Manage your upcoming trips</p>
+                </div>
+                <div class="action-card" onclick="showDashboardTab('payment')">
+                    <div class="action-icon">
+                        <i class="fas fa-credit-card"></i>
+                    </div>
+                    <h4>Payment Methods</h4>
+                    <p>Update your payment preferences</p>
+                </div>
+                <div class="action-card" onclick="showDashboardTab('account')">
+                    <div class="action-icon">
+                        <i class="fas fa-user-cog"></i>
+                    </div>
+                    <h4>Account Settings</h4>
+                    <p>Customize your profile</p>
+                </div>
+            </div>
+
+            <!-- Personalized Recommendations -->
+            <div class="personal-rec">
+                <h3>Recommended For You</h3>
+                <p>Based on your previous stays in Bali and Paris</p>
+                <div class="hotel-grid" style="grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); margin-top: 1rem;">
+                    <div class="hotel-card">
+                        <div class="hotel-image">
+                            <img src="https://images.unsplash.com/photo-1520250497591-112f2f40a3f4?ixlib=rb-4.0.3&auto=format&fit=crop&w=600&q=80" alt="Paris Hotel">
+                            <div class="hotel-badge">RECOMMENDED</div>
+                        </div>
+                        <div class="hotel-info">
+                            <h3 class="hotel-name">Champs Élysées Hotel</h3>
+                            <div class="hotel-location">
+                                <i class="fas fa-map-marker-alt"></i>
+                                <span>Paris, France</span>
+                            </div>
+                            <p class="hotel-price">$329 <small>/night</small></p>
+                            <button class="btn btn-primary">Book Now</button>
+                        </div>
+                    </div>
+                    <div class="hotel-card">
+                        <div class="hotel-image">
+                            <img src="https://images.unsplash.com/photo-1566073771259-6a8506099945?ixlib=rb-4.0.3&auto=format&fit=crop&w=600&q=80" alt="Bali Hotel">
+                            <div class="hotel-badge">RECOMMENDED</div>
+                        </div>
+                        <div class="hotel-info">
+                            <h3 class="hotel-name">Oceanview Resort</h3>
+                            <div class="hotel-location">
+                                <i class="fas fa-map-marker-alt"></i>
+                                <span>Bali, Indonesia</span>
+                            </div>
+                            <p class="hotel-price">$359 <small>/night</small></p>
+                            <button class="btn btn-primary">Book Now</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Special Offer Ad -->
+            <div class="promo-banner">
+                <h3>Exclusive Member Offer!</h3>
+                <p>Get 15% off your next booking with code: MEMBER15</p>
+                <button class="btn btn-outline" style="background: rgba(255,255,255,0.2); color: white; border-color: white;">
+                    Claim Offer
+                </button>
             </div>
 
             <div class="dashboard-tabs">
@@ -1124,6 +1317,19 @@
                         </div>
                         <div class="ad-image">
                             <img src="https://images.unsplash.com/photo-1596394516093-501ba68a0ba6?ixlib=rb-4.0.3&auto=format&fit=crop&w=300&q=80" alt="Summer Special" style="width: 150px; border-radius: 8px;">
+                        </div>
+                    </div>
+                    
+                    <!-- Additional Ad -->
+                    <div class="ad-container">
+                        <div class="ad-content">
+                            <span class="ad-badge">New Feature</span>
+                            <h3>Price Freeze Protection</h3>
+                            <p>Lock in your rate now and we'll refund the difference if the price drops!</p>
+                            <button class="btn btn-primary">Learn More</button>
+                        </div>
+                        <div class="ad-image">
+                            <img src="https://images.unsplash.com/photo-1571896349842-33c89424de2d?ixlib=rb-4.0.3&auto=format&fit=crop&w=300&q=80" alt="Price Freeze" style="width: 150px; border-radius: 8px;">
                         </div>
                     </div>
                 </div>
@@ -1319,7 +1525,7 @@
                             <p class="hotel-price">$459 <small>/night</small></p>
                             <div class="deal-details">
                                 <p><i class="fas fa-check"></i> Champagne on arrival</p>
-                                <p><i class="fas fa-check"></i couples massage</p>
+                                <p><i class="fas fa-check"></i> Couples massage</p>
                                 <p><i class="fas fa-check"></i> Romantic dinner</p>
                             </div>
                             <button class="btn btn-primary">Book Now</button>
@@ -1499,6 +1705,12 @@
                     <label for="login-password">Password</label>
                     <input type="password" id="login-password" class="form-control" placeholder="Enter your password">
                 </div>
+                <div class="form-group">
+                    <div class="form-check">
+                        <input type="checkbox" id="remember-me" class="form-check-input">
+                        <label for="remember-me" class="form-check-label">Remember me</label>
+                    </div>
+                </div>
                 <button class="btn btn-primary" style="width: 100%;" onclick="login()">
                     <i class="fas fa-sign-in-alt"></i> Login
                 </button>
@@ -1522,6 +1734,10 @@
                     <label for="signup-password">Password</label>
                     <input type="password" id="signup-password" class="form-control" placeholder="Create a password">
                 </div>
+                <div class="form-group">
+                    <label for="signup-confirm-password">Confirm Password</label>
+                    <input type="password" id="signup-confirm-password" class="form-control" placeholder="Confirm your password">
+                </div>
                 <button class="btn btn-primary" style="width: 100%;" onclick="signup()">
                     <i class="fas fa-user-plus"></i> Create Account
                 </button>
@@ -1530,7 +1746,7 @@
     </div>
 
     <script>
-          // State management
+        // State management
         const state = {
             user: null,
             bookings: [],
@@ -1608,6 +1824,9 @@
             
             // Update state
             state.currentSection = sectionId.replace('-section', '');
+            
+            // Scroll to section
+            document.getElementById(sectionId).scrollIntoView({ behavior: 'smooth' });
         }
 
         // Add click events to navigation links
@@ -1623,21 +1842,24 @@
         const dashboardTabs = document.querySelectorAll('.dashboard-tab');
         const dashboardContents = document.querySelectorAll('.dashboard-content');
 
+        function showDashboardTab(tabId) {
+            // Update active tab
+            dashboardTabs.forEach(t => t.classList.remove('active'));
+            document.querySelector(`.dashboard-tab[data-tab="${tabId}"]`).classList.add('active');
+            
+            // Show corresponding content
+            dashboardContents.forEach(content => {
+                content.classList.remove('active');
+                if (content.id === tabId + '-content') {
+                    content.classList.add('active');
+                }
+            });
+        }
+
         dashboardTabs.forEach(tab => {
             tab.addEventListener('click', () => {
                 const tabId = tab.getAttribute('data-tab');
-                
-                // Update active tab
-                dashboardTabs.forEach(t => t.classList.remove('active'));
-                tab.classList.add('active');
-                
-                // Show corresponding content
-                dashboardContents.forEach(content => {
-                    content.classList.remove('active');
-                    if (content.id === tabId + '-content') {
-                        content.classList.add('active');
-                    }
-                });
+                showDashboardTab(tabId);
             });
         });
 
@@ -1672,8 +1894,15 @@
         // Authentication functions
         function login() {
             const email = document.getElementById('login-email').value;
+            const password = document.getElementById('login-password').value;
+            
             if (!email) {
                 alert('Please enter an email address');
+                return;
+            }
+            
+            if (!password) {
+                alert('Please enter your password');
                 return;
             }
             
@@ -1692,6 +1921,9 @@
             searchWidget.style.opacity = "1";
             loginPrompt.style.display = "none";
             
+            // Apply user theme
+            document.body.classList.add('user-theme');
+            
             // Close modal
             closeModal();
             
@@ -1702,9 +1934,16 @@
         function signup() {
             const name = document.getElementById('signup-name').value;
             const email = document.getElementById('signup-email').value;
+            const password = document.getElementById('signup-password').value;
+            const confirmPassword = document.getElementById('signup-confirm-password').value;
             
-            if (!name || !email) {
-                alert('Please enter your name and email address');
+            if (!name || !email || !password) {
+                alert('Please fill in all required fields');
+                return;
+            }
+            
+            if (password !== confirmPassword) {
+                alert('Passwords do not match');
                 return;
             }
             
@@ -1723,6 +1962,9 @@
             searchWidget.style.opacity = "1";
             loginPrompt.style.display = "none";
             
+            // Apply user theme
+            document.body.classList.add('user-theme');
+            
             // Close modal
             closeModal();
             
@@ -1737,6 +1979,9 @@
             // Disable search functionality
             searchWidget.style.opacity = "0.7";
             loginPrompt.style.display = "block";
+            
+            // Remove user theme
+            document.body.classList.remove('user-theme');
             
             alert('You have been logged out successfully.');
         }
@@ -1856,20 +2101,6 @@
                 loginPrompt.style.display = "block";
             }
         };
-
-        document.addEventListener('keydown', function(event) {
-    if (event.ctrlKey && (event.key === 's' || event.key === 'S')) {
-        event.preventDefault();
-        alert("Saving is disabled.");
-    }
-});
-document.addEventListener('keydown', function(event) {
-    if (event.ctrlKey) {
-        event.preventDefault();
-        // Optionally, show a message or do something else
-        alert("Ctrl key is disabled on this page.");
-    }
-});
     </script>
 </body>
 </html>
