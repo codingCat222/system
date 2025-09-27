@@ -778,6 +778,41 @@
             }
         }
 
+        /* Enhanced Mobile Responsiveness */
+        @media (max-width: 480px) {
+            .search-form {
+                grid-template-columns: 1fr;
+                gap: 15px;
+            }
+            
+            .search-widget {
+                margin: -20px auto 2rem;
+                padding: 1.5rem;
+            }
+            
+            .hotel-card {
+                margin: 0 10px;
+            }
+            
+            .btn {
+                padding: 0.8rem 1rem;
+                font-size: 0.9rem;
+            }
+            
+            .user-dashboard {
+                padding: 1rem;
+                margin: 1rem auto;
+            }
+            
+            .carousel-content h2 {
+                font-size: 1.8rem;
+            }
+            
+            .carousel-content {
+                padding: 1.5rem;
+            }
+        }
+
         /* FAQ Section */
         .faq-section {
             padding: 4rem 0;
@@ -1987,6 +2022,16 @@
     </div>
 
     <script>
+        // API Configuration
+        const API_CONFIG = {
+            baseURL: 'https://booking-com.p.rapidapi.com',
+            apiKey: 'your-actual-api-key-here', // Replace with your RapidAPI key
+            endpoints: {
+                search: '/v1/hotels/search',
+                locations: '/v1/hotels/locations'
+            }
+        };
+
         // State management
         const state = {
             user: null,
@@ -2014,7 +2059,7 @@
                 "Lagos", "Nasarawa", "Niger", "Ogun", "Ondo", "Osun", 
                 "Oyo", "Plateau", "Rivers", "Sokoto", "Taraba", "Yobe", "Zamfara"
             ],
-            // Mock API data for Nigerian hotels
+            // Mock API data for Nigerian hotels (fallback)
             nigerianHotels: [
                 {
                     id: 1,
@@ -2059,66 +2104,6 @@
                         { type: "Deluxe Room", price: 52000, available: 4 },
                         { type: "Executive Room", price: 75000, available: 3 },
                         { type: "Presidential Suite", price: 150000, available: 1 }
-                    ]
-                },
-                {
-                    id: 4,
-                    name: "Transcorp Hilton Abuja",
-                    location: "Maitama, Abuja",
-                    price: 55000,
-                    rating: 4.6,
-                    image: "https://images.unsplash.com/photo-1586375300773-8384e3e4916f?ixlib=rb-4.0.3&auto=format&fit=crop&w=600&q=80",
-                    description: "A landmark hotel in Nigeria's capital city, offering luxurious accommodations and extensive conference facilities.",
-                    amenities: ["Free WiFi", "Swimming Pool", "Conference Rooms", "Spa", "Multiple Restaurants"],
-                    rooms: [
-                        { type: "Standard Room", price: 55000, available: 6 },
-                        { type: "Executive Room", price: 80000, available: 4 },
-                        { type: "Diplomatic Suite", price: 180000, available: 2 }
-                    ]
-                },
-                {
-                    id: 5,
-                    name: "Sheraton Abuja Hotel",
-                    location: "Central Area, Abuja",
-                    price: 42000,
-                    rating: 4.4,
-                    image: "https://images.unsplash.com/photo-1561503972-839d0c56d6a0?ixlib=rb-4.0.3&auto=format&fit=crop&w=600&q=80",
-                    description: "A centrally located hotel with modern amenities, perfect for both business and leisure travelers visiting Abuja.",
-                    amenities: ["Free WiFi", "Swimming Pool", "Fitness Center", "Restaurant", "Bar"],
-                    rooms: [
-                        { type: "Standard Room", price: 42000, available: 10 },
-                        { type: "Deluxe Room", price: 58000, available: 5 },
-                        { type: "Club Room", price: 75000, available: 3 }
-                    ]
-                },
-                {
-                    id: 6,
-                    name: "Hotel Presidential",
-                    location: "Port Harcourt, Rivers",
-                    price: 35000,
-                    rating: 4.2,
-                    image: "https://images.unsplash.com/photo-1571896349842-33c89424de2d?ixlib=rb-4.0.3&auto=format&fit=crop&w=600&q=80",
-                    description: "A well-established hotel in Port Harcourt offering comfortable accommodations and excellent service.",
-                    amenities: ["Free WiFi", "Swimming Pool", "Restaurant", "Bar", "Fitness Center"],
-                    rooms: [
-                        { type: "Standard Room", price: 35000, available: 7 },
-                        { type: "Executive Room", price: 50000, available: 4 },
-                        { type: "Suite", price: 80000, available: 2 }
-                    ]
-                },
-                {
-                    id: 7,
-                    name: "Kakanfo Inn",
-                    location: "Ibadan, Oyo",
-                    price: 28000,
-                    rating: 4.0,
-                    image: "https://images.unsplash.com/photo-1596394516093-501ba68a0ba6?ixlib=rb-4.0.3&auto=format&fit=crop&w=600&q=80",
-                    description: "A comfortable hotel in the historic city of Ibadan, offering affordable luxury and warm hospitality.",
-                    amenities: ["Free WiFi", "Restaurant", "Bar", "Conference Room", "Parking"],
-                    rooms: [
-                        { type: "Standard Room", price: 28000, available: 12 },
-                        { type: "Deluxe Room", price: 38000, available: 6 },
-                        { type: "Executive Room", price: 50000, available: 3 }
                     ]
                 }
             ],
@@ -2433,18 +2418,21 @@
             
             state.currentHotel = hotel;
             
-            // Set payment modal details
-            document.getElementById('payment-hotel-name').textContent = hotel.name;
-            document.getElementById('payment-check-in').textContent = formatDate(document.getElementById('check-in').value);
-            document.getElementById('payment-check-out').textContent = formatDate(document.getElementById('check-out').value);
-            document.getElementById('payment-guests').textContent = document.getElementById('guests').value + ' Guests';
-            document.getElementById('payment-price').textContent = `₦${hotel.price.toLocaleString()}`;
-            
-            // Calculate total
+            // Get dynamic pricing based on dates
             const checkIn = new Date(document.getElementById('check-in').value);
             const checkOut = new Date(document.getElementById('check-out').value);
             const nights = Math.ceil((checkOut - checkIn) / (1000 * 60 * 60 * 24));
-            const total = hotel.price * nights;
+            
+            // Use API-driven pricing or fallback to hotel data
+            const basePrice = hotel.price || 25000;
+            const total = basePrice * nights;
+            
+            // Update modal with dynamic pricing
+            document.getElementById('payment-hotel-name').textContent = hotel.name;
+            document.getElementById('payment-check-in').textContent = formatDate(checkIn);
+            document.getElementById('payment-check-out').textContent = formatDate(checkOut);
+            document.getElementById('payment-guests').textContent = document.getElementById('guests').value + ' Guests';
+            document.getElementById('payment-price').textContent = `₦${basePrice.toLocaleString()}`;
             document.getElementById('payment-total').textContent = `₦${total.toLocaleString()}`;
             
             paymentModal.style.display = 'flex';
@@ -2625,18 +2613,18 @@
             userDashboard.style.display = 'block';
             
             // Enable search functionality
-            searchWidget.style.opacity = "1";
-            loginPrompt.style.display = "none";
-            
-            // Close modal
-            closeModal();
-            
-            // Show success message
-            alert('Account created successfully! Welcome to LuxuryStays.');
-            
-            // Populate hotels table in dashboard
-            populateHotelsTable();
-        }
+                searchWidget.style.opacity = "1";
+                loginPrompt.style.display = "none";
+                
+                // Close modal
+                closeModal();
+                
+                // Show success message
+                alert('Account created successfully! Welcome to LuxuryStays.');
+                
+                // Populate hotels table in dashboard
+                populateHotelsTable();
+            }
 
         function logout() {
             state.user = null;
@@ -2672,34 +2660,48 @@
             document.getElementById('check-out').setAttribute('min', checkInDate);
         });
 
-        // Form submission
+        // Fixed form submission with API integration
         document.getElementById('searchForm').addEventListener('submit', function(e) {
             e.preventDefault();
             
-            const state = document.getElementById('state').value;
+            const stateValue = document.getElementById('state').value;
             const destination = document.getElementById('destination').value;
             const checkIn = document.getElementById('check-in').value;
             const checkOut = document.getElementById('check-out').value;
             
-            if (!state || !destination || !checkIn || !checkOut) {
-                alert('Please fill in all search fields');
-            } else {
-                searchHotels(state, destination);
+            if (!stateValue) {
+                alert('Please select a state first');
+                return;
             }
+            
+            // Use the selected state as destination if destination is empty
+            const searchDestination = destination || stateValue;
+            
+            if (!checkIn || !checkOut) {
+                alert('Please select check-in and check-out dates');
+                return;
+            }
+            
+            searchHotels(stateValue, searchDestination);
         });
 
         // Nigerian states functionality
         function populateStates() {
             statesList.innerHTML = '';
-            state.nigerianStates.forEach(state => {
+            state.nigerianStates.forEach(stateName => {
                 const div = document.createElement('div');
-                div.textContent = state;
+                div.textContent = stateName;
                 div.classList.add('state-item');
                 div.addEventListener('click', () => {
-                    stateInput.value = state;
+                    stateInput.value = stateName;
                     statesList.style.display = 'none';
-                    document.getElementById('destination').value = state;
-                    state.selectedState = state;
+                    // Auto-fill destination with the selected state
+                    document.getElementById('destination').value = stateName;
+                    state.selectedState = stateName;
+                    // Trigger search when state is selected
+                    if (document.getElementById('check-in').value && document.getElementById('check-out').value) {
+                        searchHotels(stateName, stateName);
+                    }
                 });
                 statesList.appendChild(div);
             });
@@ -2717,36 +2719,125 @@
             }
         });
 
-        // Hotel search function
-        function searchHotels(state, destination) {
-            // Show loading state
+        // API function to get location ID
+        async function getLocationId(destination) {
+            try {
+                const response = await fetch(`${API_CONFIG.baseURL}${API_CONFIG.endpoints.locations}?name=${encodeURIComponent(destination)}&locale=en-gb`, {
+                    method: 'GET',
+                    headers: {
+                        'X-RapidAPI-Key': API_CONFIG.apiKey,
+                        'X-RapidAPI-Host': 'booking-com.p.rapidapi.com'
+                    }
+                });
+                
+                const data = await response.json();
+                return data[0]?.id || null;
+            } catch (error) {
+                console.error('Error fetching location ID:', error);
+                return null;
+            }
+        }
+
+        // API function to fetch hotels
+        async function fetchHotelsFromAPI(locationId, stateValue) {
+            try {
+                const checkIn = document.getElementById('check-in').value;
+                const checkOut = document.getElementById('check-out').value;
+                const guests = document.getElementById('guests').value;
+
+                const response = await fetch(
+                    `${API_CONFIG.baseURL}${API_CONFIG.endpoints.search}?` +
+                    `checkin_date=${checkIn}&` +
+                    `checkout_date=${checkOut}&` +
+                    `units=metric&` +
+                    `room_number=1&` +
+                    `adults_number=${guests}&` +
+                    `order_by=popularity&` +
+                    `filter_by_currency=NGN&` +
+                    `locale=en-gb&` +
+                    `location_id=${locationId}`,
+                    {
+                        method: 'GET',
+                        headers: {
+                            'X-RapidAPI-Key': API_CONFIG.apiKey,
+                            'X-RapidAPI-Host': 'booking-com.p.rapidapi.com'
+                        }
+                    }
+                );
+
+                const data = await response.json();
+                
+                // Transform API response to match your hotel object structure
+                return data.result.map(hotel => ({
+                    id: hotel.hotel_id,
+                    name: hotel.hotel_name,
+                    location: hotel.city || stateValue,
+                    price: hotel.min_total_price || Math.floor(Math.random() * 50000) + 15000,
+                    rating: parseFloat(hotel.review_score) / 2 || 4.0,
+                    image: hotel.main_photo_url || 'https://images.unsplash.com/photo-1566073771259-6a8506099945?ixlib=rb-4.0.3&auto=format&fit=crop&w=600&q=80',
+                    description: hotel.address || `Luxury hotel in ${stateValue}`,
+                    amenities: ["Free WiFi", "Swimming Pool", "Air Conditioning"],
+                    rooms: [
+                        { type: "Standard Room", price: hotel.min_total_price || 25000, available: 5 },
+                        { type: "Deluxe Room", price: (hotel.min_total_price || 25000) + 15000, available: 3 },
+                        { type: "Suite", price: (hotel.min_total_price || 25000) + 30000, available: 2 }
+                    ]
+                }));
+            } catch (error) {
+                console.error('Error fetching hotels:', error);
+                return [];
+            }
+        }
+
+        // Updated searchHotels function with API integration
+        async function searchHotels(stateValue, destination) {
             const searchBtn = document.querySelector('.search-btn');
             const originalText = searchBtn.innerHTML;
             searchBtn.innerHTML = '<span class="loading"></span> Searching...';
             searchBtn.disabled = true;
-            
-            // Simulate API call with timeout
-            setTimeout(() => {
-                // Reset button
+
+            try {
+                let hotels = [];
+                
+                // Try to use API first
+                if (API_CONFIG.apiKey && API_CONFIG.apiKey !== 'your-actual-api-key-here') {
+                    const locationId = await getLocationId(destination);
+                    
+                    if (locationId) {
+                        hotels = await fetchHotelsFromAPI(locationId, stateValue);
+                    }
+                }
+                
+                // If API fails or no API key, use local data
+                if (hotels.length === 0) {
+                    hotels = getHotelsByState(stateValue);
+                    if (hotels.length === 0) {
+                        // Show message about using demo data
+                        alert('Using demo data. For real hotel data, please configure your API key.');
+                    }
+                }
+                
+                // Display the results
+                displayHotels(hotels, featuredHotels);
+                document.getElementById('home-section').scrollIntoView({ behavior: 'smooth' });
+                
+            } catch (error) {
+                console.error('Search error:', error);
+                // Fallback to local data
+                const localHotels = getHotelsByState(stateValue);
+                displayHotels(localHotels, featuredHotels);
+                alert('Using local data. Please check your API configuration for live results.');
+            } finally {
                 searchBtn.innerHTML = originalText;
                 searchBtn.disabled = false;
-                
-                // Get hotels based on state
-                const hotels = getHotelsByState(state);
-                
-                // Display hotels in featured section
-                displayHotels(hotels, featuredHotels);
-                
-                // Scroll to hotels section
-                document.getElementById('home-section').scrollIntoView({ behavior: 'smooth' });
-            }, 1500);
+            }
         }
 
-        // Function to get hotels by state
-        function getHotelsByState(state) {
+        // Function to get hotels by state (fallback)
+        function getHotelsByState(stateValue) {
             // Filter hotels by state (simulating API call)
             return state.nigerianHotels.filter(hotel => 
-                hotel.location.toLowerCase().includes(state.toLowerCase())
+                hotel.location.toLowerCase().includes(stateValue.toLowerCase())
             );
         }
 
@@ -2923,8 +3014,8 @@
             showSection('deals-section');
             
             // Display deals hotels
-            const dealsHotels = state.nigerianHotels.filter(hotel => hotel.price < 40000);
-            displayHotels(dealsHotels, dealsHotels);
+            const dealsHotelsData = state.nigerianHotels.filter(hotel => hotel.price < 40000);
+            displayHotels(dealsHotelsData, dealsHotels);
         });
 
         // Initialize page
