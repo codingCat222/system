@@ -549,6 +549,8 @@
             position: relative;
             box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.25);
             animation: modalFadeIn 0.3s ease;
+            max-height: 90vh;
+            overflow-y: auto;
         }
 
         @keyframes modalFadeIn {
@@ -1124,6 +1126,7 @@
         /* Hotel Details Modal */
         .hotel-details-modal {
             max-width: 800px;
+            width: 95%;
         }
 
         .hotel-details-content {
@@ -1202,7 +1205,7 @@
 
         .food-items {
             display: grid;
-            grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+            grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
             gap: 1rem;
         }
 
@@ -1242,6 +1245,42 @@
 
         .dashboard-table tr:hover {
             background: #f8fafc;
+        }
+
+        /* Back to site button */
+        .back-to-site {
+            display: block;
+            margin-top: 1.5rem;
+            text-align: center;
+            color: var(--primary);
+            text-decoration: none;
+            font-weight: 500;
+            transition: var(--transition);
+        }
+
+        .back-to-site:hover {
+            text-decoration: underline;
+        }
+
+        /* Hotel Details Modal Responsive */
+        @media (max-width: 768px) {
+            .hotel-details-header {
+                flex-direction: column;
+            }
+            
+            .hotel-details-image, .hotel-details-info {
+                flex: none;
+            }
+            
+            .room-type-header {
+                flex-direction: column;
+                align-items: flex-start;
+                gap: 1rem;
+            }
+            
+            .food-items {
+                grid-template-columns: repeat(auto-fill, minmax(120px, 1fr));
+            }
         }
     </style>
 </head>
@@ -2018,6 +2057,9 @@
             <div class="hotel-details-content" id="hotel-details-content">
                 <!-- Hotel details will be populated by JavaScript -->
             </div>
+            <a href="#" class="back-to-site" onclick="closeHotelDetailsModal()">
+                <i class="fas fa-arrow-left"></i> Back to Site
+            </a>
         </div>
     </div>
 
@@ -2025,7 +2067,7 @@
         // API Configuration
         const API_CONFIG = {
             baseURL: 'https://booking-com.p.rapidapi.com',
-            apiKey: 'your-actual-api-key-here', // Replace with your RapidAPI key
+            apiKey: '', // Leave empty to use demo data
             endpoints: {
                 search: '/v1/hotels/search',
                 locations: '/v1/hotels/locations'
@@ -2104,6 +2146,51 @@
                         { type: "Deluxe Room", price: 52000, available: 4 },
                         { type: "Executive Room", price: 75000, available: 3 },
                         { type: "Presidential Suite", price: 150000, available: 1 }
+                    ]
+                },
+                {
+                    id: 4,
+                    name: "Transcorp Hilton",
+                    location: "Abuja",
+                    price: 55000,
+                    rating: 4.4,
+                    image: "https://images.unsplash.com/photo-1520250497591-112f2f40a3f4?ixlib=rb-4.0.3&auto=format&fit=crop&w=600&q=80",
+                    description: "A landmark hotel in Nigeria's capital city, offering luxurious accommodations and premium facilities for both business and leisure travelers.",
+                    amenities: ["Free WiFi", "Swimming Pool", "Conference Facilities", "Spa", "Multiple Restaurants"],
+                    rooms: [
+                        { type: "Standard Room", price: 55000, available: 6 },
+                        { type: "Executive Room", price: 80000, available: 4 },
+                        { type: "Presidential Suite", price: 180000, available: 1 }
+                    ]
+                },
+                {
+                    id: 5,
+                    name: "Le Meridien",
+                    location: "Ibadan, Oyo",
+                    price: 42000,
+                    rating: 4.2,
+                    image: "https://images.unsplash.com/photo-1564501049412-61c2a3083791?ixlib=rb-4.0.3&auto=format&fit=crop&w=600&q=80",
+                    description: "A modern hotel offering comfortable accommodations in the historic city of Ibadan, with excellent amenities and service.",
+                    amenities: ["Free WiFi", "Swimming Pool", "Restaurant", "Fitness Center", "Bar"],
+                    rooms: [
+                        { type: "Standard Room", price: 42000, available: 7 },
+                        { type: "Deluxe Room", price: 58000, available: 3 },
+                        { type: "Suite", price: 95000, available: 2 }
+                    ]
+                },
+                {
+                    id: 6,
+                    name: "Sheraton Hotel",
+                    location: "Abuja",
+                    price: 60000,
+                    rating: 4.6,
+                    image: "https://images.unsplash.com/photo-1542314831-068cd1dbfeeb?ixlib=rb-4.0.3&auto=format&fit=crop&w=600&q=80",
+                    description: "An internationally renowned hotel offering premium accommodations and services in the heart of Abuja.",
+                    amenities: ["Free WiFi", "Swimming Pool", "Spa", "Fitness Center", "Fine Dining"],
+                    rooms: [
+                        { type: "Standard Room", price: 60000, available: 5 },
+                        { type: "Club Room", price: 85000, available: 3 },
+                        { type: "Executive Suite", price: 150000, available: 2 }
                     ]
                 }
             ],
@@ -2613,18 +2700,18 @@
             userDashboard.style.display = 'block';
             
             // Enable search functionality
-                searchWidget.style.opacity = "1";
-                loginPrompt.style.display = "none";
-                
-                // Close modal
-                closeModal();
-                
-                // Show success message
-                alert('Account created successfully! Welcome to LuxuryStays.');
-                
-                // Populate hotels table in dashboard
-                populateHotelsTable();
-            }
+            searchWidget.style.opacity = "1";
+            loginPrompt.style.display = "none";
+            
+            // Close modal
+            closeModal();
+            
+            // Show success message
+            alert('Account created successfully! Welcome to LuxuryStays.');
+            
+            // Populate hotels table in dashboard
+            populateHotelsTable();
+        }
 
         function logout() {
             state.user = null;
@@ -2722,6 +2809,11 @@
         // API function to get location ID
         async function getLocationId(destination) {
             try {
+                // If API key is not configured, return null to use demo data
+                if (!API_CONFIG.apiKey) {
+                    return null;
+                }
+                
                 const response = await fetch(`${API_CONFIG.baseURL}${API_CONFIG.endpoints.locations}?name=${encodeURIComponent(destination)}&locale=en-gb`, {
                     method: 'GET',
                     headers: {
@@ -2729,6 +2821,10 @@
                         'X-RapidAPI-Host': 'booking-com.p.rapidapi.com'
                     }
                 });
+                
+                if (!response.ok) {
+                    throw new Error('API request failed');
+                }
                 
                 const data = await response.json();
                 return data[0]?.id || null;
@@ -2765,6 +2861,10 @@
                     }
                 );
 
+                if (!response.ok) {
+                    throw new Error('API request failed');
+                }
+
                 const data = await response.json();
                 
                 // Transform API response to match your hotel object structure
@@ -2799,8 +2899,8 @@
             try {
                 let hotels = [];
                 
-                // Try to use API first
-                if (API_CONFIG.apiKey && API_CONFIG.apiKey !== 'your-actual-api-key-here') {
+                // Try to use API first if API key is configured
+                if (API_CONFIG.apiKey) {
                     const locationId = await getLocationId(destination);
                     
                     if (locationId) {
@@ -2990,7 +3090,7 @@
             // Add some additional hotels
             const additionalHotels = [
                 {
-                    id: 8,
+                    id: 7,
                     name: "Luxury Suites",
                     location: `${state.selectedState} City`,
                     price: 32000,
