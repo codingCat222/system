@@ -28,11 +28,135 @@
             --transition: all 0.3s ease;
         }
 
+        /* Preloader Styles */
+        #preloader {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(135deg, var(--primary) 0%, var(--primary-dark) 100%);
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            z-index: 9999;
+            transition: opacity 0.5s ease, visibility 0.5s ease;
+        }
+
+        #preloader.fade-out {
+            opacity: 0;
+            visibility: hidden;
+        }
+
+        .preloader-content {
+            text-align: center;
+            color: white;
+        }
+
+        .preloader-logo {
+            font-size: 3rem;
+            margin-bottom: 1rem;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 15px;
+        }
+
+        .preloader-logo i {
+            font-size: 3.5rem;
+        }
+
+        .preloader-spinner {
+            width: 50px;
+            height: 50px;
+            border: 5px solid rgba(255, 255, 255, 0.3);
+            border-radius: 50%;
+            border-top-color: white;
+            margin: 20px auto;
+            animation: spin 1s linear infinite;
+        }
+
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+
         body {
             background: linear-gradient(135deg, #f0f9ff 0%, #e0f2fe 100%);
             color: var(--dark);
             line-height: 1.6;
             min-height: 100vh;
+            overflow-x: hidden;
+        }
+
+        /* Page Sections */
+        .page-section {
+            display: none;
+        }
+
+        .page-section.active {
+            display: block;
+        }
+
+        /* Enhanced Dropdown Styles */
+        .dropdown {
+            position: relative;
+            display: inline-block;
+        }
+
+        .dropdown-menu {
+            position: absolute;
+            top: 100%;
+            right: 0;
+            min-width: 200px;
+            background: white;
+            border: none;
+            border-radius: 12px;
+            padding: 0.5rem;
+            box-shadow: var(--shadow);
+            z-index: 1000;
+            display: none;
+        }
+
+        .dropdown-menu.show {
+            display: block;
+            animation: slideDown 0.2s ease;
+        }
+
+        @keyframes slideDown {
+            from {
+                opacity: 0;
+                transform: translateY(-10px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .dropdown-item {
+            padding: 0.7rem 1rem;
+            border-radius: 8px;
+            margin: 0.1rem 0;
+            transition: var(--transition);
+            background: none;
+            border: none;
+            width: 100%;
+            text-align: left;
+            cursor: pointer;
+            text-decoration: none;
+            color: var(--dark);
+            display: block;
+        }
+
+        .dropdown-item:hover {
+            background-color: var(--primary);
+            color: white;
+        }
+
+        .dropdown-toggle::after {
+            margin-left: 0.5rem;
         }
 
         .container {
@@ -42,7 +166,7 @@
             padding: 0 20px;
         }
 
-        /* Header Styles */
+        /* Enhanced Header Styles with Mobile Toggle */
         header {
             background-color: rgba(255, 255, 255, 0.97);
             backdrop-filter: blur(10px);
@@ -68,6 +192,15 @@
             display: flex;
             align-items: center;
             gap: 10px;
+        }
+
+        .mobile-toggle {
+            display: none;
+            background: none;
+            border: none;
+            font-size: 1.5rem;
+            color: var(--dark);
+            cursor: pointer;
         }
 
         nav ul {
@@ -141,18 +274,22 @@
             color: white;
         }
 
-        .btn-secondary {
-            background: linear-gradient(135deg, var(--secondary) 0%, var(--accent) 100%);
-            color: white;
-            box-shadow: var(--shadow);
+        /* Mobile Auth Buttons */
+        .mobile-auth-buttons {
+            display: none;
+            flex-direction: column;
+            gap: 10px;
+            margin-top: 1rem;
+            padding-top: 1rem;
+            border-top: 1px solid var(--light-gray);
         }
 
-        .btn-secondary:hover {
-            transform: translateY(-2px);
-            box-shadow: 0 20px 25px -5px rgba(249, 115, 22, 0.3);
+        .mobile-auth-buttons .btn {
+            width: 100%;
+            justify-content: center;
         }
 
-        /* Hero Carousel */
+        /* Enhanced Hero Section */
         .hero-carousel {
             position: relative;
             height: 500px;
@@ -221,7 +358,7 @@
             transform: scale(1.2);
         }
 
-        /* Search Widget */
+        /* Enhanced Search Widget */
         .search-widget {
             background: rgba(255, 255, 255, 0.95);
             backdrop-filter: blur(10px);
@@ -286,15 +423,155 @@
             box-shadow: 0 20px 25px -5px rgba(249, 115, 22, 0.3);
         }
 
-        /* Page Sections */
-        .page-section {
+        /* Enhanced User Dashboard */
+        .user-dashboard {
             display: none;
-            padding: 3rem 0;
+            background: white;
+            border-radius: 20px;
+            padding: 2rem;
+            margin: 2rem auto;
+            max-width: 1200px;
+            box-shadow: var(--shadow);
+            border: 1px solid var(--light-gray);
         }
 
-        .page-section.active {
-            display: block;
+        .dashboard-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 2rem;
+            padding-bottom: 1.5rem;
+            border-bottom: 2px solid var(--light-gray);
+        }
+
+        .user-header {
+            display: flex;
+            align-items: center;
+            gap: 1.5rem;
+        }
+
+        .user-avatar {
+            width: 80px;
+            height: 80px;
+            border-radius: 50%;
+            background: linear-gradient(135deg, var(--primary) 0%, var(--secondary) 100%);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-size: 2rem;
+            font-weight: bold;
+            border: 4px solid white;
+            box-shadow: var(--shadow);
+        }
+
+        .user-info h2 {
+            margin-bottom: 0.5rem;
+            color: var(--dark);
+        }
+
+        .user-stats {
+            display: flex;
+            gap: 2rem;
+            margin-top: 1rem;
+        }
+
+        .stat-item {
+            text-align: center;
+            padding: 1rem;
+            background: var(--light);
+            border-radius: 12px;
+            min-width: 120px;
+        }
+
+        .stat-value {
+            font-size: 1.5rem;
+            font-weight: bold;
+            color: var(--primary);
+            margin-bottom: 0.5rem;
+        }
+
+        .stat-label {
+            font-size: 0.9rem;
+            color: var(--gray);
+        }
+
+        /* Bottom Navigation for Dashboard */
+        .dashboard-bottom-nav {
+            display: none;
+            position: fixed;
+            bottom: 0;
+            left: 0;
+            width: 100%;
+            background: white;
+            box-shadow: 0 -5px 15px rgba(0, 0, 0, 0.1);
+            z-index: 100;
+            padding: 0.5rem 0;
+        }
+
+        .bottom-nav-items {
+            display: flex;
+            justify-content: space-around;
+            align-items: center;
+        }
+
+        .bottom-nav-item {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            padding: 0.5rem;
+            color: var(--gray);
+            text-decoration: none;
+            font-size: 0.8rem;
+            transition: var(--transition);
+            flex: 1;
+            text-align: center;
+        }
+
+        .bottom-nav-item.active {
+            color: var(--primary);
+        }
+
+        .bottom-nav-item i {
+            font-size: 1.2rem;
+            margin-bottom: 0.3rem;
+        }
+
+        /* Enhanced Dashboard Tabs */
+        .dashboard-tabs {
+            display: flex;
+            border-bottom: 2px solid var(--light-gray);
+            margin-bottom: 2rem;
+            background: var(--light);
+            border-radius: 12px;
+            padding: 0.5rem;
+        }
+
+        .dashboard-tab {
+            padding: 1rem 1.5rem;
+            cursor: pointer;
+            border-radius: 8px;
+            font-weight: 500;
+            transition: var(--transition);
+            background: none;
+            border: none;
+            flex: 1;
+            text-align: center;
+        }
+
+        .dashboard-tab.active {
+            background: white;
+            color: var(--primary);
+            box-shadow: var(--shadow);
+        }
+
+        .dashboard-content {
+            display: none;
             animation: fadeIn 0.5s ease;
+        }
+
+        .dashboard-content.active {
+            display: block;
         }
 
         @keyframes fadeIn {
@@ -302,7 +579,271 @@
             to { opacity: 1; transform: translateY(0); }
         }
 
-        /* Features Section */
+        /* Enhanced Booking Cards */
+        .booking-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+            gap: 1.5rem;
+        }
+
+        .booking-card {
+            background: white;
+            border-radius: 16px;
+            padding: 1.5rem;
+            box-shadow: var(--shadow);
+            border: 1px solid var(--light-gray);
+            transition: var(--transition);
+        }
+
+        .booking-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1);
+        }
+
+        .booking-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-start;
+            margin-bottom: 1rem;
+        }
+
+        .booking-status {
+            padding: 0.4rem 1rem;
+            border-radius: 20px;
+            font-size: 0.8rem;
+            font-weight: 600;
+        }
+
+        .status-confirmed {
+            background: #d1fae5;
+            color: #065f46;
+        }
+
+        .booking-dates {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 1rem;
+            margin: 1rem 0;
+        }
+
+        .date-item {
+            text-align: center;
+            padding: 1rem;
+            background: var(--light);
+            border-radius: 8px;
+        }
+
+        .date-label {
+            font-size: 0.8rem;
+            color: var(--gray);
+            margin-bottom: 0.5rem;
+        }
+
+        .date-value {
+            font-weight: 600;
+            color: var(--dark);
+        }
+
+        /* Hotel Cards */
+        .hotel-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+            gap: 1.5rem;
+        }
+
+        .hotel-card {
+            background: white;
+            border-radius: 16px;
+            overflow: hidden;
+            box-shadow: var(--shadow);
+            transition: var(--transition);
+        }
+
+        .hotel-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1);
+        }
+
+        .hotel-image {
+            height: 200px;
+            width: 100%;
+            background-size: cover;
+            background-position: center;
+        }
+
+        .hotel-details {
+            padding: 1.5rem;
+        }
+
+        .hotel-name {
+            font-size: 1.2rem;
+            margin-bottom: 0.5rem;
+            color: var(--dark);
+        }
+
+        .hotel-location {
+            color: var(--gray);
+            margin-bottom: 1rem;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .hotel-price {
+            font-size: 1.5rem;
+            font-weight: bold;
+            color: var(--primary);
+            margin-bottom: 1rem;
+        }
+
+        .hotel-rating {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            margin-bottom: 1rem;
+        }
+
+        .rating-stars {
+            color: #fbbf24;
+        }
+
+        /* Enhanced Modal Styles */
+        .modal {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.6);
+            backdrop-filter: blur(5px);
+            z-index: 1000;
+            align-items: center;
+            justify-content: center;
+            padding: 20px;
+        }
+
+        .modal-content {
+            background-color: white;
+            border-radius: 20px;
+            width: 100%;
+            max-width: 480px;
+            padding: 2.5rem;
+            position: relative;
+            box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.25);
+            animation: modalFadeIn 0.3s ease;
+        }
+
+        @keyframes modalFadeIn {
+            from {
+                opacity: 0;
+                transform: translateY(-20px) scale(0.95);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0) scale(1);
+            }
+        }
+
+        .close-modal {
+            position: absolute;
+            top: 1.2rem;
+            right: 1.2rem;
+            font-size: 1.5rem;
+            cursor: pointer;
+            color: var(--gray);
+            transition: var(--transition);
+            background: none;
+            border: none;
+        }
+
+        .close-modal:hover {
+            color: var(--dark);
+            transform: rotate(90deg);
+        }
+
+        .modal-tabs {
+            display: flex;
+            margin-bottom: 2rem;
+            border-bottom: 2px solid var(--light-gray);
+        }
+
+        .modal-tab {
+            padding: 1rem 1.8rem;
+            cursor: pointer;
+            border-bottom: 3px solid transparent;
+            font-weight: 500;
+            transition: var(--transition);
+            background: none;
+            border: none;
+            width: 50%;
+        }
+
+        .modal-tab.active {
+            border-bottom: 3px solid var(--primary);
+            color: var(--primary);
+        }
+
+        /* Enhanced Login/Signup Forms */
+        .auth-form {
+            margin-top: 1.5rem;
+        }
+
+        .form-header {
+            text-align: center;
+            margin-bottom: 2rem;
+        }
+
+        .form-header h2 {
+            color: var(--dark);
+            margin-bottom: 0.5rem;
+        }
+
+        .form-header p {
+            color: var(--gray);
+        }
+
+        .input-group {
+            position: relative;
+            margin-bottom: 1.5rem;
+        }
+
+        .input-group i {
+            position: absolute;
+            left: 1rem;
+            top: 50%;
+            transform: translateY(-50%);
+            color: var(--gray);
+        }
+
+        .input-group .form-control {
+            padding-left: 3rem;
+        }
+
+        .remember-forgot {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 1.5rem;
+        }
+
+        .remember-me {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .forgot-password {
+            color: var(--primary);
+            text-decoration: none;
+            font-size: 0.9rem;
+        }
+
+        .forgot-password:hover {
+            text-decoration: underline;
+        }
+
+        /* Enhanced Features Section */
         .features {
             padding: 4rem 0;
         }
@@ -341,6 +882,7 @@
             text-align: center;
             box-shadow: var(--shadow);
             transition: var(--transition);
+            border: 1px solid var(--light-gray);
         }
 
         .feature-card:hover {
@@ -352,123 +894,199 @@
             font-size: 2.8rem;
             margin-bottom: 1.5rem;
             background: linear-gradient(135deg, var(--primary) 0%, var(--primary-dark) 100%);
+            display: inline-block;
+            background-clip: text;
             -webkit-background-clip: text;
+            color: transparent;
             -webkit-text-fill-color: transparent;
         }
 
-        /* Hotels Section */
-        .hotels {
-            padding: 2rem 0 5rem;
+        /* Additional Styles for Personal Touch */
+        .welcome-banner {
+            background: linear-gradient(135deg, var(--primary) 0%, var(--primary-dark) 100%);
+            color: white;
+            padding: 3rem 2rem;
+            border-radius: 20px;
+            margin-bottom: 2rem;
+            text-align: center;
         }
 
-        .hotel-grid {
+        .welcome-banner h1 {
+            font-size: 2.5rem;
+            margin-bottom: 1rem;
+        }
+
+        .quick-actions {
             display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
-            gap: 2.5rem;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 1rem;
+            margin: 2rem 0;
         }
 
-        .hotel-card {
+        .action-card {
             background: white;
-            border-radius: 16px;
-            overflow: hidden;
+            padding: 1.5rem;
+            border-radius: 12px;
+            text-align: center;
             box-shadow: var(--shadow);
             transition: var(--transition);
-            position: relative;
+            cursor: pointer;
         }
 
-        .hotel-card:hover {
-            transform: translateY(-5px);
-            box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.15);
+        .action-card:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 15px 30px -5px rgba(0, 0, 0, 0.1);
         }
 
-        .hotel-image {
-            height: 220px;
-            overflow: hidden;
-            position: relative;
+        .action-icon {
+            font-size: 2rem;
+            color: var(--primary);
+            margin-bottom: 1rem;
         }
 
-        .hotel-image img {
-            width: 100%;
-            height: 100%;
-            object-fit: cover;
+        .recent-activity {
+            background: white;
+            border-radius: 16px;
+            padding: 2rem;
+            box-shadow: var(--shadow);
+            margin-top: 2rem;
+        }
+
+        .activity-item {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+            padding: 1rem;
+            border-bottom: 1px solid var(--light-gray);
+        }
+
+        .activity-item:last-child {
+            border-bottom: none;
+        }
+
+        .activity-icon {
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            background: var(--light);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: var(--primary);
+        }
+
+        /* Account Settings */
+        .settings-form {
+            max-width: 600px;
+        }
+
+        .settings-group {
+            margin-bottom: 2rem;
+        }
+
+        .settings-group h3 {
+            margin-bottom: 1rem;
+            color: var(--dark);
+            border-bottom: 1px solid var(--light-gray);
+            padding-bottom: 0.5rem;
+        }
+
+        /* Payment Methods */
+        .payment-methods {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+            gap: 1.5rem;
+        }
+
+        .payment-card {
+            background: white;
+            border-radius: 12px;
+            padding: 1.5rem;
+            box-shadow: var(--shadow);
+            border: 1px solid var(--light-gray);
+        }
+
+        .payment-header {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+            margin-bottom: 1rem;
+        }
+
+        .payment-icon {
+            font-size: 1.5rem;
+            color: var(--primary);
+        }
+
+        /* Payment Page */
+        .payment-container {
+            background: white;
+            border-radius: 20px;
+            padding: 2rem;
+            box-shadow: var(--shadow);
+            max-width: 600px;
+            margin: 2rem auto;
+        }
+
+        .payment-summary {
+            background: var(--light);
+            border-radius: 12px;
+            padding: 1.5rem;
+            margin-bottom: 2rem;
+        }
+
+        .payment-options {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+            gap: 1rem;
+            margin-bottom: 2rem;
+        }
+
+        .payment-option {
+            border: 2px solid var(--light-gray);
+            border-radius: 12px;
+            padding: 1rem;
+            text-align: center;
+            cursor: pointer;
             transition: var(--transition);
         }
 
-        .hotel-card:hover .hotel-image img {
-            transform: scale(1.1);
+        .payment-option.active {
+            border-color: var(--primary);
+            background: rgba(37, 99, 235, 0.05);
         }
 
-        .hotel-badge {
-            position: absolute;
-            top: 15px;
-            right: 15px;
-            background: var(--secondary);
-            color: white;
-            padding: 0.4rem 0.8rem;
-            border-radius: 20px;
-            font-size: 0.8rem;
-            font-weight: 600;
-        }
-
-        .hotel-info {
-            padding: 1.8rem;
-        }
-
-        .hotel-name {
-            font-size: 1.4rem;
+        .payment-option i {
+            font-size: 2rem;
             margin-bottom: 0.5rem;
-            color: var(--dark);
-        }
-
-        .hotel-location {
-            color: var(--gray);
-            margin-bottom: 1rem;
-            display: flex;
-            align-items: center;
-            gap: 5px;
-        }
-
-        .hotel-price {
-            font-size: 1.4rem;
-            font-weight: bold;
             color: var(--primary);
-            margin: 1rem 0;
         }
 
-        .hotel-rating {
-            color: var(--warning);
-            margin-bottom: 1rem;
-        }
-
-        /* Footer */
+        /* Footer Styles */
         footer {
-            background: linear-gradient(135deg, var(--dark) 0%, #0f172a 100%);
+            background: var(--dark);
             color: white;
-            padding: 4rem 0 2rem;
+            padding: 3rem 0 1.5rem;
+            margin-top: 4rem;
         }
 
         .footer-content {
             display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
-            gap: 2.5rem;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 2rem;
+            margin-bottom: 2rem;
         }
 
         .footer-column h3 {
-            font-size: 1.3rem;
             margin-bottom: 1.5rem;
-            position: relative;
-            padding-bottom: 0.8rem;
+            color: white;
+            font-size: 1.2rem;
         }
 
-        .footer-column h3::after {
-            content: '';
-            position: absolute;
-            left: 0;
-            bottom: 0;
-            width: 50px;
-            height: 3px;
-            background: var(--secondary);
-            border-radius: 3px;
+        .footer-column p {
+            color: var(--gray);
+            margin-bottom: 1.5rem;
+            line-height: 1.6;
         }
 
         .footer-column ul {
@@ -476,38 +1094,36 @@
         }
 
         .footer-column ul li {
-            margin-bottom: 0.9rem;
+            margin-bottom: 0.8rem;
         }
 
         .footer-column ul li a {
-            color: #cbd5e1;
+            color: var(--gray);
             text-decoration: none;
             transition: var(--transition);
-            display: inline-flex;
+            display: flex;
             align-items: center;
-            gap: 8px;
+            gap: 0.5rem;
         }
 
         .footer-column ul li a:hover {
             color: white;
-            transform: translateX(5px);
         }
 
         .social-links {
             display: flex;
-            gap: 1.2rem;
-            margin-top: 1.5rem;
+            gap: 1rem;
         }
 
         .social-links a {
-            color: white;
-            background: rgba(255, 255, 255, 0.1);
-            width: 45px;
-            height: 45px;
-            border-radius: 50%;
             display: flex;
             align-items: center;
             justify-content: center;
+            width: 40px;
+            height: 40px;
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 50%;
+            color: white;
             transition: var(--transition);
         }
 
@@ -518,130 +1134,114 @@
 
         .copyright {
             text-align: center;
-            margin-top: 4rem;
-            padding-top: 2rem;
+            padding-top: 1.5rem;
             border-top: 1px solid rgba(255, 255, 255, 0.1);
-            color: #94a3b8;
-        }
-
-        /* Modal Styles */
-        .modal {
-            display: none;
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background-color: rgba(0, 0, 0, 0.6);
-            backdrop-filter: blur(5px);
-            z-index: 1000;
-            align-items: center;
-            justify-content: center;
-            padding: 20px;
-        }
-
-        .modal-content {
-            background-color: white;
-            border-radius: 16px;
-            width: 100%;
-            max-width: 480px;
-            padding: 2.5rem;
-            position: relative;
-            box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.25);
-            animation: modalFadeIn 0.3s ease;
-            max-height: 90vh;
-            overflow-y: auto;
-        }
-
-        @keyframes modalFadeIn {
-            from {
-                opacity: 0;
-                transform: translateY(-20px);
-            }
-            to {
-                opacity: 1;
-                transform: translateY(0);
-            }
-        }
-
-        .close-modal {
-            position: absolute;
-            top: 1.2rem;
-            right: 1.2rem;
-            font-size: 1.5rem;
-            cursor: pointer;
             color: var(--gray);
-            transition: var(--transition);
+            font-size: 0.9rem;
         }
 
-        .close-modal:hover {
-            color: var(--dark);
-            transform: rotate(90deg);
+        /* Ads Section */
+        .ads-section {
+            padding: 2rem 0;
         }
 
-        .modal-tabs {
+        .ad-container {
+            background: linear-gradient(135deg, var(--primary) 0%, var(--primary-dark) 100%);
+            border-radius: 16px;
+            padding: 2rem;
             display: flex;
-            margin-bottom: 2rem;
-            border-bottom: 2px solid var(--light-gray);
+            align-items: center;
+            justify-content: space-between;
+            color: white;
         }
 
-        .modal-tab {
-            padding: 1rem 1.8rem;
+        .ad-content {
+            flex: 1;
+        }
+
+        .ad-badge {
+            background: var(--accent);
+            color: white;
+            padding: 0.3rem 1rem;
+            border-radius: 20px;
+            font-size: 0.8rem;
+            font-weight: 600;
+            margin-bottom: 1rem;
+            display: inline-block;
+        }
+
+        .ad-content h3 {
+            font-size: 1.8rem;
+            margin-bottom: 1rem;
+        }
+
+        .ad-content p {
+            margin-bottom: 1.5rem;
+            opacity: 0.9;
+        }
+
+        .ad-image img {
+            border-radius: 8px;
+        }
+
+        /* Order Check Styles */
+        .order-check-form {
+            background: white;
+            border-radius: 16px;
+            padding: 2rem;
+            box-shadow: var(--shadow);
+            margin-bottom: 2rem;
+        }
+
+        .order-not-found {
+            background: #fef2f2;
+            border: 1px solid #fecaca;
+            border-radius: 8px;
+            padding: 1.5rem;
+            margin-top: 1.5rem;
+            display: none;
+        }
+
+        .order-actions {
+            display: flex;
+            gap: 1rem;
+            margin: 1rem 0;
+            flex-wrap: wrap;
+        }
+
+        .staff-section {
+            background: white;
+            border-radius: 16px;
+            padding: 2rem;
+            box-shadow: var(--shadow);
+            margin-bottom: 2rem;
+        }
+
+        .staff-tabs {
+            display: flex;
+            border-bottom: 2px solid var(--light-gray);
+            margin-bottom: 1.5rem;
+        }
+
+        .staff-tab {
+            padding: 1rem 1.5rem;
             cursor: pointer;
             border-bottom: 3px solid transparent;
             font-weight: 500;
             transition: var(--transition);
         }
 
-        .modal-tab.active {
+        .staff-tab.active {
             border-bottom: 3px solid var(--primary);
             color: var(--primary);
         }
 
-        /* User Dashboard */
-        .user-dashboard {
+        .staff-content {
             display: none;
-            background: white;
-            border-radius: 16px;
-            padding: 2rem;
-            margin: 2rem auto;
-            max-width: 900px;
-            box-shadow: var(--shadow);
         }
 
-        .user-header {
-            display: flex;
-            align-items: center;
-            gap: 1rem;
-            margin-bottom: 2rem;
-        }
-
-        .user-avatar {
-            width: 60px;
-            height: 60px;
-            border-radius: 50%;
-            background: linear-gradient(135deg, var(--primary) 0%, var(--secondary) 100%);
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            color: white;
-            font-size: 1.5rem;
-            font-weight: bold;
-        }
-
-        /* Order Check Section */
-        .order-check-section {
-            padding: 4rem 0;
-            background: var(--light);
-        }
-
-        .order-check-form {
-            background: white;
-            border-radius: 16px;
-            padding: 2rem;
-            box-shadow: var(--shadow);
-            max-width: 600px;
-            margin: 0 auto;
+        .staff-content.active {
+            display: block;
         }
 
         .order-details {
@@ -653,40 +1253,13 @@
             display: none;
         }
 
-        .order-details.active {
-            display: block;
-            animation: fadeIn 0.5s ease;
-        }
-
         .order-header {
             display: flex;
             justify-content: space-between;
-            align-items: center;
-            margin-bottom: 1.5rem;
-            padding-bottom: 1rem;
+            align-items: flex-start;
+            margin-bottom: 2rem;
+            padding-bottom: 1.5rem;
             border-bottom: 2px solid var(--light-gray);
-        }
-
-        .order-status {
-            padding: 0.5rem 1rem;
-            border-radius: 20px;
-            font-weight: 600;
-            font-size: 0.9rem;
-        }
-
-        .status-confirmed {
-            background: #d1fae5;
-            color: #065f46;
-        }
-
-        .status-pending {
-            background: #fef3c7;
-            color: #92400e;
-        }
-
-        .status-cancelled {
-            background: #fee2e2;
-            color: #991b1b;
         }
 
         .order-info {
@@ -709,6 +1282,7 @@
 
         .info-value {
             font-weight: 600;
+            color: var(--dark);
         }
 
         .order-timeline {
@@ -717,6 +1291,7 @@
 
         .timeline-item {
             display: flex;
+            gap: 1rem;
             margin-bottom: 1.5rem;
             position: relative;
         }
@@ -724,23 +1299,22 @@
         .timeline-item:not(:last-child)::after {
             content: '';
             position: absolute;
-            left: 15px;
-            top: 30px;
+            left: 20px;
+            top: 40px;
             bottom: -20px;
             width: 2px;
             background: var(--light-gray);
         }
 
         .timeline-icon {
-            width: 30px;
-            height: 30px;
+            width: 40px;
+            height: 40px;
             border-radius: 50%;
-            background: var(--primary);
-            color: white;
+            background: var(--light);
             display: flex;
             align-items: center;
             justify-content: center;
-            margin-right: 1rem;
+            color: var(--primary);
             z-index: 1;
         }
 
@@ -748,543 +1322,300 @@
             flex: 1;
         }
 
-        .timeline-date {
-            font-size: 0.9rem;
-            color: var(--gray);
+        .timeline-content h5 {
+            margin-bottom: 0.5rem;
+            color: var(--dark);
         }
 
-        /* Responsive Styles */
+        .timeline-date {
+            color: var(--gray);
+            font-size: 0.9rem;
+            margin-bottom: 0.5rem;
+        }
+
+        /* FAQ Styles */
+        .accordion {
+            background: white;
+            border-radius: 16px;
+            overflow: hidden;
+            box-shadow: var(--shadow);
+        }
+
+        .accordion-item {
+            border-bottom: 1px solid var(--light-gray);
+        }
+
+        .accordion-item:last-child {
+            border-bottom: none;
+        }
+
+        .accordion-header {
+            padding: 1.5rem;
+            cursor: pointer;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            font-weight: 500;
+            transition: var(--transition);
+        }
+
+        .accordion-header:hover {
+            background: var(--light);
+        }
+
+        .accordion-header i {
+            transition: var(--transition);
+        }
+
+        .accordion-header.active i {
+            transform: rotate(180deg);
+        }
+
+        .accordion-content {
+            padding: 0 1.5rem;
+            max-height: 0;
+            overflow: hidden;
+            transition: var(--transition);
+        }
+
+        .accordion-content.active {
+            padding: 0 1.5rem 1.5rem;
+            max-height: 500px;
+        }
+
+        .accordion-content p {
+            color: var(--gray);
+            line-height: 1.6;
+        }
+
+        /* About Section */
+        .about-content {
+            background: white;
+            border-radius: 16px;
+            padding: 2rem;
+            box-shadow: var(--shadow);
+        }
+
+        /* Notification Styles */
+        .notification {
+            position: fixed;
+            top: 20px;
+            right: 20px;
+            padding: 1rem 1.5rem;
+            border-radius: 8px;
+            color: white;
+            z-index: 10000;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            box-shadow: var(--shadow);
+            transform: translateX(150%);
+            transition: transform 0.3s ease;
+        }
+
+        .notification.show {
+            transform: translateX(0);
+        }
+
+        .notification.success {
+            background: var(--success);
+        }
+
+        .notification.error {
+            background: #dc2626;
+        }
+
+        .notification.info {
+            background: var(--primary);
+        }
+
+        /* Loading States */
+        .loading {
+            opacity: 0.7;
+            pointer-events: none;
+        }
+
+        .loading::after {
+            content: '';
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            width: 20px;
+            height: 20px;
+            border: 2px solid transparent;
+            border-top: 2px solid var(--primary);
+            border-radius: 50%;
+            animation: spin 1s linear infinite;
+        }
+
+        /* Responsive Design */
         @media (max-width: 768px) {
             .header-content {
-                flex-direction: column;
-                text-align: center;
+                flex-direction: row;
                 gap: 1rem;
+            }
+            
+            .mobile-toggle {
+                display: block;
+            }
+            
+            nav {
+                position: absolute;
+                top: 100%;
+                left: 0;
+                width: 100%;
+                background: white;
+                box-shadow: var(--shadow);
+                padding: 1rem;
+                transform: translateY(-10px);
+                opacity: 0;
+                visibility: hidden;
+                transition: var(--transition);
+            }
+            
+            nav.active {
+                transform: translateY(0);
+                opacity: 1;
+                visibility: visible;
             }
             
             nav ul {
-                flex-wrap: wrap;
-                justify-content: center;
-                gap: 1rem;
+                flex-direction: column;
+                gap: 0.5rem;
             }
             
-            .hero h1 {
-                font-size: 2.5rem;
-            }
-            
-            .search-form {
-                grid-template-columns: 1fr;
-            }
-            
-            .hotel-grid, .features-grid {
-                grid-template-columns: 1fr;
-            }
-        }
-
-        /* Enhanced Mobile Responsiveness */
-        @media (max-width: 480px) {
-            .search-form {
-                grid-template-columns: 1fr;
-                gap: 15px;
-            }
-            
-            .search-widget {
-                margin: -20px auto 2rem;
-                padding: 1.5rem;
-            }
-            
-            .hotel-card {
-                margin: 0 10px;
-            }
-            
-            .btn {
+            nav ul li a {
+                display: block;
                 padding: 0.8rem 1rem;
-                font-size: 0.9rem;
+            }
+            
+            .auth-buttons {
+                display: none;
+            }
+            
+            .mobile-auth-buttons {
+                display: flex;
+            }
+            
+            .search-form {
+                grid-template-columns: 1fr;
+            }
+            
+            .user-header {
+                flex-direction: column;
+                text-align: center;
+            }
+            
+            .user-stats {
+                justify-content: center;
+                flex-wrap: wrap;
+            }
+            
+            .dashboard-tabs {
+                display: none;
+            }
+            
+            .dashboard-bottom-nav {
+                display: block;
             }
             
             .user-dashboard {
-                padding: 1rem;
-                margin: 1rem auto;
+                padding-bottom: 80px;
+            }
+            
+            .booking-grid {
+                grid-template-columns: 1fr;
+            }
+            
+            .hotel-grid {
+                grid-template-columns: 1fr;
             }
             
             .carousel-content h2 {
                 font-size: 1.8rem;
             }
             
-            .carousel-content {
+            .welcome-banner h1 {
+                font-size: 1.8rem;
+            }
+            
+            .quick-actions {
+                grid-template-columns: 1fr;
+            }
+            
+            .ad-container {
+                flex-direction: column;
+                text-align: center;
+                gap: 1.5rem;
+            }
+            
+            .order-actions {
+                flex-direction: column;
+            }
+            
+            .footer-content {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .container {
+                padding: 0 15px;
+            }
+            
+            .search-widget {
+                padding: 1.5rem;
+                margin-top: -20px;
+            }
+            
+            .user-dashboard {
                 padding: 1.5rem;
             }
-        }
-
-        /* FAQ Section */
-        .faq-section {
-            padding: 4rem 0;
-            background: var(--light);
-        }
-
-        .accordion {
-            margin-top: 2rem;
-        }
-
-        .accordion-item {
-            margin-bottom: 1rem;
-            border-radius: 8px;
-            overflow: hidden;
-            box-shadow: var(--shadow);
-        }
-
-        .accordion-header {
-            background: white;
-            padding: 1.5rem;
-            cursor: pointer;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            font-weight: 500;
-        }
-
-        .accordion-content {
-            background: white;
-            padding: 0 1.5rem;
-            max-height: 0;
-            overflow: hidden;
-            transition: max-height 0.3s ease;
-        }
-
-        .accordion-content.active {
-            max-height: 300px;
-            padding: 1.5rem;
-        }
-
-        /* Payment Section */
-        .payment-section {
-            padding: 4rem 0;
-        }
-
-        .payment-cards {
-            display: flex;
-            gap: 1rem;
-            margin-top: 1rem;
-        }
-
-        .payment-card {
-            border: 1px solid var(--light-gray);
-            padding: 1rem;
-            border-radius: 8px;
-            text-align: center;
-            cursor: pointer;
-            transition: var(--transition);
-        }
-
-        .payment-card:hover {
-            border-color: var(--primary);
-            box-shadow: var(--shadow);
-        }
-
-        .payment-card i {
-            font-size: 2rem;
-            margin-bottom: 0.5rem;
-            color: var(--primary);
-        }
-
-        /* Destination suggestions */
-        .destination-suggestions {
-            position: absolute;
-            width: 100%;
-            background: white;
-            border-radius: 0 0 8px 8px;
-            box-shadow: var(--shadow);
-            z-index: 10;
-            display: none;
-        }
-
-        .suggestion-item {
-            padding: 0.8rem 1.2rem;
-            cursor: pointer;
-            transition: var(--transition);
-        }
-
-        .suggestion-item:hover {
-            background: var(--light-gray);
-        }
-
-        /* User Dashboard Tabs */
-        .dashboard-tabs {
-            display: flex;
-            border-bottom: 2px solid var(--light-gray);
-            margin-bottom: 2rem;
-        }
-
-        .dashboard-tab {
-            padding: 1rem 1.5rem;
-            cursor: pointer;
-            border-bottom: 3px solid transparent;
-            font-weight: 500;
-            transition: var(--transition);
-        }
-
-        .dashboard-tab.active {
-            border-bottom: 3px solid var(--primary);
-            color: var(--primary);
-        }
-
-        .dashboard-content {
-            display: none;
-        }
-
-        .dashboard-content.active {
-            display: block;
-        }
-
-        /* Transaction History */
-        .transaction-item {
-            display: flex;
-            justify-content: space-between;
-            padding: 1rem;
-            border-bottom: 1px solid var(--light-gray);
-        }
-
-        .transaction-details {
-            flex: 1;
-        }
-
-        .transaction-amount {
-            font-weight: bold;
-        }
-
-        /* Balance Display */
-        .balance-display {
-            background: linear-gradient(135deg, var(--primary) 0%, var(--primary-dark) 100%);
-            color: white;
-            padding: 2rem;
-            border-radius: 12px;
-            text-align: center;
-            margin-bottom: 2rem;
-        }
-
-        .balance-amount {
-            font-size: 2.5rem;
-            font-weight: bold;
-            margin: 1rem 0;
-        }
-
-        /* Ads Section */
-        .ads-section {
-            padding: 2rem 0;
-        }
-
-        .ad-container {
-            background: white;
-            border-radius: 12px;
-            padding: 1.5rem;
-            box-shadow: var(--shadow);
-            margin-bottom: 2rem;
-            display: flex;
-            align-items: center;
-            gap: 1.5rem;
-        }
-
-        .ad-content {
-            flex: 1;
-        }
-
-        .ad-badge {
-            background: var(--secondary);
-            color: white;
-            padding: 0.4rem 0.8rem;
-            border-radius: 20px;
-            font-size: 0.8rem;
-            font-weight: 600;
-            display: inline-block;
-            margin-bottom: 1rem;
-        }
-
-        /* Order not found message */
-        .order-not-found {
-            background: #fee2e2;
-            border: 1px solid #fecaca;
-            border-radius: 8px;
-            padding: 1.5rem;
-            margin-top: 1.5rem;
-            display: none;
-        }
-
-        .order-not-found.active {
-            display: block;
-        }
-
-        .order-actions {
-            display: flex;
-            gap: 1rem;
-            margin-top: 1rem;
-            flex-wrap: wrap;
-        }
-
-        /* Payment Modal */
-        .payment-modal {
-            max-width: 600px;
-        }
-
-        .payment-summary {
-            background: var(--light);
-            border-radius: 8px;
-            padding: 1.5rem;
-            margin-bottom: 1.5rem;
-        }
-
-        .payment-summary-item {
-            display: flex;
-            justify-content: space-between;
-            margin-bottom: 0.5rem;
-        }
-
-        .payment-summary-total {
-            border-top: 1px solid var(--light-gray);
-            padding-top: 1rem;
-            margin-top: 1rem;
-            font-weight: bold;
-            font-size: 1.2rem;
-        }
-
-        /* State dropdown */
-        .state-dropdown {
-            position: relative;
-        }
-
-        .states-list {
-            position: absolute;
-            width: 100%;
-            background: white;
-            border-radius: 0 0 8px 8px;
-            box-shadow: var(--shadow);
-            z-index: 10;
-            max-height: 200px;
-            overflow-y: auto;
-            display: none;
-        }
-
-        .state-item {
-            padding: 0.8rem 1.2rem;
-            cursor: pointer;
-            transition: var(--transition);
-        }
-
-        .state-item:hover {
-            background: var(--light-gray);
-        }
-
-        /* Loading spinner */
-        .loading {
-            display: inline-block;
-            width: 20px;
-            height: 20px;
-            border: 3px solid rgba(255,255,255,.3);
-            border-radius: 50%;
-            border-top-color: #fff;
-            animation: spin 1s ease-in-out infinite;
-        }
-
-        @keyframes spin {
-            to { transform: rotate(360deg); }
-        }
-
-        /* Staff Section */
-        .staff-section {
-            background: #f0f9ff;
-            border-radius: 12px;
-            padding: 2rem;
-            margin-top: 2rem;
-            border-left: 4px solid var(--primary);
-        }
-
-        .staff-tabs {
-            display: flex;
-            border-bottom: 2px solid var(--light-gray);
-            margin-bottom: 1.5rem;
-        }
-
-        .staff-tab {
-            padding: 0.8rem 1.5rem;
-            cursor: pointer;
-            border-bottom: 3px solid transparent;
-            font-weight: 500;
-            transition: var(--transition);
-        }
-
-        .staff-tab.active {
-            border-bottom: 3px solid var(--primary);
-            color: var(--primary);
-        }
-
-        .staff-content {
-            display: none;
-        }
-
-        .staff-content.active {
-            display: block;
-        }
-
-        /* Hotel Details Modal */
-        .hotel-details-modal {
-            max-width: 800px;
-            width: 95%;
-        }
-
-        .hotel-details-content {
-            display: flex;
-            flex-direction: column;
-            gap: 1.5rem;
-        }
-
-        .hotel-details-header {
-            display: flex;
-            gap: 1.5rem;
-        }
-
-        .hotel-details-image {
-            flex: 1;
-            border-radius: 12px;
-            overflow: hidden;
-        }
-
-        .hotel-details-image img {
-            width: 100%;
-            height: 200px;
-            object-fit: cover;
-        }
-
-        .hotel-details-info {
-            flex: 2;
-        }
-
-        .room-availability {
-            margin-top: 1rem;
-        }
-
-        .room-type {
-            background: var(--light);
-            border-radius: 8px;
-            padding: 1rem;
-            margin-bottom: 1rem;
-        }
-
-        .room-type-header {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            margin-bottom: 0.5rem;
-        }
-
-        /* Food Ordering Section */
-        .food-ordering {
-            margin-top: 2rem;
-            padding: 1.5rem;
-            background: var(--light);
-            border-radius: 12px;
-        }
-
-        .food-categories {
-            display: flex;
-            gap: 1rem;
-            margin-bottom: 1.5rem;
-            overflow-x: auto;
-        }
-
-        .food-category {
-            padding: 0.5rem 1rem;
-            background: white;
-            border-radius: 20px;
-            cursor: pointer;
-            transition: var(--transition);
-            white-space: nowrap;
-        }
-
-        .food-category.active {
-            background: var(--primary);
-            color: white;
-        }
-
-        .food-items {
-            display: grid;
-            grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
-            gap: 1rem;
-        }
-
-        .food-item {
-            background: white;
-            border-radius: 8px;
-            padding: 1rem;
-            text-align: center;
-            box-shadow: var(--shadow);
-        }
-
-        .food-item img {
-            width: 100%;
-            height: 120px;
-            object-fit: cover;
-            border-radius: 8px;
-            margin-bottom: 0.5rem;
-        }
-
-        /* Dashboard Table */
-        .dashboard-table {
-            width: 100%;
-            border-collapse: collapse;
-            margin-top: 1rem;
-        }
-
-        .dashboard-table th, .dashboard-table td {
-            padding: 1rem;
-            text-align: left;
-            border-bottom: 1px solid var(--light-gray);
-        }
-
-        .dashboard-table th {
-            background: var(--light);
-            font-weight: 600;
-        }
-
-        .dashboard-table tr:hover {
-            background: #f8fafc;
-        }
-
-        /* Back to site button */
-        .back-to-site {
-            display: block;
-            margin-top: 1.5rem;
-            text-align: center;
-            color: var(--primary);
-            text-decoration: none;
-            font-weight: 500;
-            transition: var(--transition);
-        }
-
-        .back-to-site:hover {
-            text-decoration: underline;
-        }
-
-        /* Hotel Details Modal Responsive */
-        @media (max-width: 768px) {
-            .hotel-details-header {
-                flex-direction: column;
-            }
             
-            .hotel-details-image, .hotel-details-info {
-                flex: none;
-            }
-            
-            .room-type-header {
+            .dashboard-header {
                 flex-direction: column;
-                align-items: flex-start;
                 gap: 1rem;
             }
             
-            .food-items {
-                grid-template-columns: repeat(auto-fill, minmax(120px, 1fr));
+            .user-stats {
+                gap: 1rem;
+            }
+            
+            .stat-item {
+                min-width: 100px;
+                padding: 0.8rem;
+            }
+            
+            .modal-content {
+                padding: 1.5rem;
+            }
+            
+            .modal-tab {
+                padding: 0.8rem 1rem;
             }
         }
     </style>
 </head>
 <body>
+    <!-- Preloader -->
+    <div id="preloader">
+        <div class="preloader-content">
+            <div class="preloader-logo">
+                <i class="fas fa-hotel"></i>
+                <span>LuxuryStays</span>
+            </div>
+            <div class="preloader-spinner"></div>
+            <p>Loading your luxury experience...</p>
+        </div>
+    </div>
+
+    <!-- Notification System -->
+    <div id="notification" class="notification">
+        <i class="fas fa-info-circle"></i>
+        <span id="notification-text">This is a notification</span>
+    </div>
+
     <!-- Header with Navigation -->
     <header>
         <div class="container">
@@ -1293,7 +1624,12 @@
                     <i class="fas fa-hotel"></i>
                     LuxuryStays
                 </a>
-                <nav>
+                
+                <button class="mobile-toggle" id="mobileToggle">
+                    <i class="fas fa-bars"></i>
+                </button>
+                
+                <nav id="mainNav">
                     <ul>
                         <li><a href="#" class="nav-link active" data-section="home">Home</a></li>
                         <li><a href="#" class="nav-link" data-section="destinations">Destinations</a></li>
@@ -1302,241 +1638,90 @@
                         <li><a href="#" class="nav-link" data-section="about">About</a></li>
                         <li><a href="#" class="nav-link" data-section="faq">FAQ</a></li>
                     </ul>
+                    <div class="mobile-auth-buttons">
+                        <button class="btn btn-outline" onclick="openModal('login')">
+                            <i class="fas fa-user"></i> Login
+                        </button>
+                        <button class="btn btn-primary" onclick="openModal('signup')">
+                            <i class="fas fa-user-plus"></i> Sign Up
+                        </button>
+                    </div>
                 </nav>
-                <div class="auth-buttons">
+                <div class="auth-buttons" id="authButtons">
                     <button class="btn btn-outline" onclick="openModal('login')">
-                        <i class="fas fa-user"></i>Login
+                        <i class="fas fa-user"></i> Login
                     </button>
                     <button class="btn btn-primary" onclick="openModal('signup')">
-                        <i class="fas fa-user-plus"></i>Sign Up
+                        <i class="fas fa-user-plus"></i> Sign Up
                     </button>
                 </div>
             </div>
         </div>
     </header>
 
-    <!-- Hero Carousel -->
-    <section class="hero-carousel">
-        <div class="carousel-inner">
-            <div class="carousel-slide active" style="background-image: url('https://images.unsplash.com/photo-1566073771259-6a8506099945?ixlib=rb-4.0.3&auto=format&fit=crop&w=1200&q=80');">
-                <div class="carousel-content">
-                    <h2>Luxury Beach Resorts</h2>
-                    <p>Enjoy the finest beachfront properties with stunning ocean views</p>
-                    <button class="btn btn-primary" onclick="showSection('destinations')">Explore Now</button>
-                </div>
-            </div>
-            <div class="carousel-slide" style="background-image: url('https://images.unsplash.com/photo-1582719508461-905c673771fd?ixlib=rb-4.0.3&auto=format&fit=crop&w=1200&q=80');">
-                <div class="carousel-content">
-                    <h2>City Center Hotels</h2>
-                    <p>Stay in the heart of the action with our premium city hotels</p>
-                    <button class="btn btn-primary" onclick="showSection('destinations')">Explore Now</button>
-                </div>
-            </div>
-            <div class="carousel-slide" style="background-image: url('https://images.unsplash.com/photo-1618773928121-c32242e63f39?ixlib=rb-4.0.3&auto=format&fit=crop&w=1200&q=80');">
-                <div class="carousel-content">
-                    <h2>Mountain Retreats</h2>
-                    <p>Escape to serene mountain locations with breathtaking views</p>
-                    <button class="btn btn-primary" onclick="showSection('destinations')">Explore Now</button>
-                </div>
-            </div>
-        </div>
-        <div class="carousel-nav">
-            <div class="carousel-dot active" data-index="0"></div>
-            <div class="carousel-dot" data-index="1"></div>
-            <div class="carousel-dot" data-index="2"></div>
-        </div>
-    </section>
-
-    <!-- Search Widget -->
-    <div class="container">
-        <div class="search-widget" id="searchWidget">
-            <form class="search-form" id="searchForm">
-                <div class="form-group state-dropdown">
-                    <label for="state"><i class="fas fa-map-pin"></i> Select State</label>
-                    <input type="text" id="state" class="form-control" placeholder="Select a state in Nigeria" readonly>
-                    <div class="states-list" id="statesList"></div>
-                </div>
-                <div class="form-group">
-                    <label for="destination"><i class="fas fa-map-marker-alt"></i> Destination</label>
-                    <input type="text" id="destination" class="form-control" placeholder="Where are you going?">
-                    <div class="destination-suggestions"></div>
-                </div>
-                <div class="form-group">
-                    <label for="check-in"><i class="fas fa-calendar-alt"></i> Check In</label>
-                    <input type="date" id="check-in" class="form-control">
-                </div>
-                <div class="form-group">
-                    <label for="check-out"><i class="fas fa-calendar-alt"></i> Check Out</label>
-                    <input type="date" id="check-out" class="form-control">
-                </div>
-                <div class="form-group">
-                    <label for="guests"><i class="fas fa-users"></i> Guests</label>
-                    <select id="guests" class="form-control">
-                        <option value="1">1 Guest</option>
-                        <option value="2" selected>2 Guests</option>
-                        <option value="3">3 Guests</option>
-                        <option value="4">4 Guests</option>
-                        <option value="5">5+ Guests</option>
-                    </select>
-                </div>
-                <button type="submit" class="search-btn">
-                    <i class="fas fa-search"></i> Search Hotels
-                </button>
-            </form>
-            <div id="login-prompt" style="display: none; text-align: center; margin-top: 1rem; color: var(--accent);">
-                <p>Please login to search for hotels</p>
-            </div>
-        </div>
-    </div>
-
-    <!-- User Dashboard (Initially Hidden) -->
-    <div class="container">
-        <div class="user-dashboard" id="userDashboard">
-            <div class="user-header">
-                <div class="user-avatar" id="userAvatar">TS</div>
-                <div>
-                    <h2 id="userName">Tobi Samuel</h2>
-                    <p>Welcome back to LuxuryStays</p>
-                </div>
-            </div>
-
-            <div class="dashboard-tabs">
-                <div class="dashboard-tab active" data-tab="bookings">My Bookings</div>
-                <div class="dashboard-tab" data-tab="hotels">Available Hotels</div>
-                <div class="dashboard-tab" data-tab="transactions">Transaction History</div>
-                <div class="dashboard-tab" data-tab="payment">Payment Methods</div>
-                <div class="dashboard-tab" data-tab="account">Account Settings</div>
-            </div>
-
-            <div class="dashboard-content active" id="bookings-content">
-                <h3>Your Upcoming Bookings</h3>
-                <div class="booking-list">
-                    <div class="hotel-card">
-                        <div class="hotel-image">
-                            <img src="https://images.unsplash.com/photo-1611892440504-42a792e24d32?ixlib=rb-4.0.3&auto=format&fit=crop&w=600&q=80" alt="The Grand Plaza">
-                            <div class="hotel-badge">CONFIRMED</div>
-                        </div>
-                        <div class="hotel-info">
-                            <h3 class="hotel-name">The Grand Plaza</h3>
-                            <div class="hotel-location">
-                                <i class="fas fa-map-marker-alt"></i>
-                                <span>New York, USA</span>
-                            </div>
-                            <div class="hotel-dates">
-                                <p><i class="fas fa-calendar"></i> Check-in: 15 Oct 2023</p>
-                                <p><i class="fas fa-calendar"></i> Check-out: 20 Oct 2023</p>
-                                <p><i class="fas fa-moon"></i> 5 nights</p>
-                            </div>
-                            <p class="hotel-price">$1,495 <small>total</small></p>
-                            <button class="btn btn-outline">Manage Booking</button>
-                        </div>
-                    </div>
-                </div>
-            </div>
-
-            <div class="dashboard-content" id="hotels-content">
-                <h3>Available Hotels</h3>
-                <div class="hotel-table-container">
-                    <table class="dashboard-table">
-                        <thead>
-                            <tr>
-                                <th>Hotel Name</th>
-                                <th>Location</th>
-                                <th>Price/Night</th>
-                                <th>Rating</th>
-                                <th>Action</th>
-                            </tr>
-                        </thead>
-                        <tbody id="hotelsTableBody">
-                            <!-- Hotels will be populated by JavaScript -->
-                        </tbody>
-                    </table>
-                </div>
-            </div>
-
-            <div class="dashboard-content" id="transactions-content">
-                <h3>Transaction History</h3>
-                <div class="balance-display">
-                    <p>Your Current Balance</p>
-                    <div class="balance-amount">₦235,000.00</div>
-                    <button class="btn btn-outline" style="background: rgba(255,255,255,0.2);">Add Funds</button>
-                </div>
-                <div class="transaction-list">
-                    <div class="transaction-item">
-                        <div class="transaction-details">
-                            <h4>The Grand Plaza Booking</h4>
-                            <p>15 Oct 2023</p>
-                        </div>
-                        <div class="transaction-amount">-₦149,500.00</div>
-                    </div>
-                    <div class="transaction-item">
-                        <div class="transaction-details">
-                            <h4>Funds Added</h4>
-                            <p>10 Oct 2023</p>
-                        </div>
-                        <div class="transaction-amount" style="color: var(--success);">+₦200,000.00</div>
-                    </div>
-                    <div class="transaction-item">
-                        <div class="transaction-details">
-                            <h4>Oceanview Resort Booking</h4>
-                            <p>5 Sep 2023</p>
-                        </div>
-                        <div class="transaction-amount">-₦179,500.00</div>
-                    </div>
-                </div>
-            </div>
-
-            <div class="dashboard-content" id="payment-content">
-                <h3>Payment Methods</h3>
-                <div class="payment-cards">
-                    <div class="payment-card" style="border-color: var(--primary);">
-                        <i class="fab fa-cc-visa"></i>
-                        <p>Visa ending in 4567</p>
-                        <small>Primary</small>
-                    </div>
-                    <div class="payment-card">
-                        <i class="fab fa-cc-mastercard"></i>
-                        <p>Mastercard ending in 8910</p>
-                    </div>
-                    <div class="payment-card">
-                        <i class="fab fa-paypal"></i>
-                        <p>PayPal</p>
-                    </div>
-                </div>
-                <button class="btn btn-primary" style="margin-top: 2rem;">
-                    <i class="fas fa-plus"></i> Add Payment Method
-                </button>
-            </div>
-
-            <div class="dashboard-content" id="account-content">
-                <h3>Account Settings</h3>
-                <div class="booking-form">
-                    <div class="form-group">
-                        <label for="account-name">Full Name</label>
-                        <input type="text" id="account-name" class="form-control" value="Tobi Samuel">
-                    </div>
-                    <div class="form-group">
-                        <label for="account-email">Email Address</label>
-                        <input type="email" id="account-email" class="form-control" value="tobisamuel2024@gmail.com">
-                    </div>
-                    <div class="form-group">
-                        <label for="account-phone">Phone Number</label>
-                        <input type="tel" id="account-phone" class="form-control" value="+234 812 345 6789">
-                    </div>
-                    <button class="btn btn-primary">Save Changes</button>
-                </div>
-            </div>
-
-            <button class="btn btn-outline" onclick="logout()" style="margin-top: 1.5rem;">
-                <i class="fas fa-sign-out-alt"></i> Log Out
-            </button>
-        </div>
-    </div>
-
-    <!-- Page Sections -->
+    <!-- Main Content Sections -->
     <main>
         <!-- Home Section -->
         <section id="home-section" class="page-section active">
+            <!-- Hero Carousel -->
+            <section class="hero-carousel">
+                <div class="carousel-inner">
+                    <div class="carousel-slide active" style="background-image: url('https://images.unsplash.com/photo-1566073771259-6a8506099945?ixlib=rb-4.0.3&auto=format&fit=crop&w=1200&q=80');">
+                        <div class="carousel-content">
+                            <h2>Luxury Beach Resorts</h2>
+                            <p>Enjoy the finest beachfront properties with stunning ocean views</p>
+                            <button class="btn btn-primary" onclick="showSection('destinations')">Explore Now</button>
+                        </div>
+                    </div>
+                    <div class="carousel-slide" style="background-image: url('https://images.unsplash.com/photo-1582719508461-905c673771fd?ixlib=rb-4.0.3&auto=format&fit=crop&w=1200&q=80');">
+                        <div class="carousel-content">
+                            <h2>City Center Hotels</h2>
+                            <p>Stay in the heart of the action with our premium city hotels</p>
+                            <button class="btn btn-primary" onclick="showSection('destinations')">Explore Now</button>
+                        </div>
+                    </div>
+                </div>
+                <div class="carousel-nav">
+                    <div class="carousel-dot active" data-index="0"></div>
+                    <div class="carousel-dot" data-index="1"></div>
+                </div>
+            </section>
+
+            <!-- Search Widget -->
+            <div class="container">
+                <div class="search-widget" id="searchWidget">
+                    <form class="search-form" id="searchForm">
+                        <div class="form-group">
+                            <label for="destination"><i class="fas fa-map-marker-alt"></i> Destination</label>
+                            <input type="text" id="destination" class="form-control" placeholder="Where are you going?">
+                        </div>
+                        <div class="form-group">
+                            <label for="check-in"><i class="fas fa-calendar-alt"></i> Check In</label>
+                            <input type="date" id="check-in" class="form-control">
+                        </div>
+                        <div class="form-group">
+                            <label for="check-out"><i class="fas fa-calendar-alt"></i> Check Out</label>
+                            <input type="date" id="check-out" class="form-control">
+                        </div>
+                        <div class="form-group">
+                            <label for="guests"><i class="fas fa-users"></i> Guests</label>
+                            <select id="guests" class="form-control">
+                                <option value="1">1 Guest</option>
+                                <option value="2" selected>2 Guests</option>
+                                <option value="3">3 Guests</option>
+                                <option value="4">4 Guests</option>
+                            </select>
+                        </div>
+                        <button type="submit" class="search-btn">
+                            <i class="fas fa-search"></i> Search Hotels
+                        </button>
+                    </form>
+                    <div id="login-prompt" style="display: none; text-align: center; margin-top: 1rem; color: var(--accent);">
+                        <p>Please login to search for hotels</p>
+                    </div>
+                </div>
+            </div>
+
             <!-- Features Section -->
             <section class="features">
                 <div class="container">
@@ -1883,6 +2068,198 @@
         </section>
     </main>
 
+    <!-- Enhanced User Dashboard -->
+    <div class="container">
+        <div class="user-dashboard" id="userDashboard">
+            <div class="dashboard-header">
+                <div class="user-header">
+                    <div class="user-avatar" id="userAvatar">TS</div>
+                    <div class="user-info">
+                        <h2 id="userName">Tobi Samuel</h2>
+                        <p>Gold Member • Joined Jan 2022</p>
+                        <div class="user-stats">
+                            <div class="stat-item">
+                                <div class="stat-value">12</div>
+                                <div class="stat-label">Bookings</div>
+                            </div>
+                            <div class="stat-item">
+                                <div class="stat-value">₦4.2M</div>
+                                <div class="stat-label">Total Spent</div>
+                            </div>
+                            <div class="stat-item">
+                                <div class="stat-value">4.8</div>
+                                <div class="stat-label">Rating</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Quick Actions -->
+            <div class="quick-actions">
+                <div class="action-card" onclick="showDashboardTab('overview')">
+                    <div class="action-icon">
+                        <i class="fas fa-tachometer-alt"></i>
+                    </div>
+                    <h4>Overview</h4>
+                    <p>Your dashboard summary</p>
+                </div>
+                <div class="action-card" onclick="showDashboardTab('hotels')">
+                    <div class="action-icon">
+                        <i class="fas fa-hotel"></i>
+                    </div>
+                    <h4>Find Hotels</h4>
+                    <p>Discover new places</p>
+                </div>
+                <div class="action-card" onclick="showDashboardTab('payment')">
+                    <div class="action-icon">
+                        <i class="fas fa-credit-card"></i>
+                    </div>
+                    <h4>Payment</h4>
+                    <p>Manage payment methods</p>
+                </div>
+                <div class="action-card" onclick="showDashboardTab('account')">
+                    <div class="action-icon">
+                        <i class="fas fa-cog"></i>
+                    </div>
+                    <h4>Settings</h4>
+                    <p>Account preferences</p>
+                </div>
+            </div>
+
+            <div class="dashboard-tabs">
+                <div class="dashboard-tab active" data-tab="overview">Overview</div>
+                <div class="dashboard-tab" data-tab="bookings">My Bookings</div>
+                <div class="dashboard-tab" data-tab="hotels">Available Hotels</div>
+                <div class="dashboard-tab" data-tab="payment">Payment Methods</div>
+                <div class="dashboard-tab" data-tab="account">Account Settings</div>
+            </div>
+
+            <!-- Overview Tab -->
+            <div class="dashboard-content active" id="overview-content">
+                <div class="welcome-banner">
+                    <h1>Welcome back, <span id="welcomeUserName">Tobi</span>! 👋</h1>
+                    <p>Ready for your next luxury experience?</p>
+                </div>
+
+                <div class="recent-activity">
+                    <h3>Recent Activity</h3>
+                    <div id="recentActivityList">
+                        <!-- Recent activities will be loaded from backend -->
+                    </div>
+                </div>
+            </div>
+
+            <!-- My Bookings Tab -->
+            <div class="dashboard-content" id="bookings-content">
+                <h3>Your Bookings</h3>
+                <div class="booking-grid" id="userBookingsList">
+                    <!-- User bookings will be loaded from backend -->
+                </div>
+            </div>
+
+            <!-- Available Hotels Tab -->
+            <div class="dashboard-content" id="hotels-content">
+                <h3>Available Hotels</h3>
+                <div class="hotel-grid" id="hotelGrid">
+                    <!-- Hotels will be loaded from backend -->
+                </div>
+            </div>
+
+            <!-- Payment Methods Tab -->
+            <div class="dashboard-content" id="payment-content">
+                <h3>Payment Methods</h3>
+                <div class="payment-methods" id="paymentMethodsList">
+                    <!-- Payment methods will be loaded from backend -->
+                </div>
+            </div>
+
+            <!-- Account Settings Tab -->
+            <div class="dashboard-content" id="account-content">
+                <h3>Account Settings</h3>
+                <div class="settings-form">
+                    <div class="settings-group">
+                        <h3>Personal Information</h3>
+                        <div class="input-group">
+                            <i class="fas fa-user"></i>
+                            <input type="text" id="settings-name" class="form-control" placeholder="Full Name">
+                        </div>
+                        <div class="input-group">
+                            <i class="fas fa-envelope"></i>
+                            <input type="email" id="settings-email" class="form-control" placeholder="Email Address">
+                        </div>
+                        <div class="input-group">
+                            <i class="fas fa-phone"></i>
+                            <input type="tel" id="settings-phone" class="form-control" placeholder="Phone Number">
+                        </div>
+                    </div>
+                    
+                    <div class="settings-group">
+                        <h3>Password</h3>
+                        <div class="input-group">
+                            <i class="fas fa-lock"></i>
+                            <input type="password" id="current-password" class="form-control" placeholder="Current Password">
+                        </div>
+                        <div class="input-group">
+                            <i class="fas fa-lock"></i>
+                            <input type="password" id="new-password" class="form-control" placeholder="New Password">
+                        </div>
+                        <div class="input-group">
+                            <i class="fas fa-lock"></i>
+                            <input type="password" id="confirm-password" class="form-control" placeholder="Confirm New Password">
+                        </div>
+                    </div>
+                    
+                    <div class="settings-group">
+                        <h3>Notifications</h3>
+                        <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 1rem;">
+                            <span>Email Notifications</span>
+                            <label class="switch">
+                                <input type="checkbox" id="email-notifications" checked>
+                                <span class="slider round"></span>
+                            </label>
+                        </div>
+                        <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 1rem;">
+                            <span>SMS Notifications</span>
+                            <label class="switch">
+                                <input type="checkbox" id="sms-notifications">
+                                <span class="slider round"></span>
+                            </label>
+                        </div>
+                    </div>
+                    
+                    <button class="btn btn-primary" style="width: 100%;" onclick="updateProfile()">Save Changes</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Bottom Navigation for Mobile -->
+    <div class="dashboard-bottom-nav">
+        <div class="bottom-nav-items">
+            <a href="#" class="bottom-nav-item active" data-tab="overview">
+                <i class="fas fa-tachometer-alt"></i>
+                <span>Overview</span>
+            </a>
+            <a href="#" class="bottom-nav-item" data-tab="bookings">
+                <i class="fas fa-calendar-check"></i>
+                <span>Bookings</span>
+            </a>
+            <a href="#" class="bottom-nav-item" data-tab="hotels">
+                <i class="fas fa-hotel"></i>
+                <span>Hotels</span>
+            </a>
+            <a href="#" class="bottom-nav-item" data-tab="payment">
+                <i class="fas fa-credit-card"></i>
+                <span>Payment</span>
+            </a>
+            <a href="#" class="bottom-nav-item" data-tab="account">
+                <i class="fas fa-cog"></i>
+                <span>Settings</span>
+            </a>
+        </div>
+    </div>
+
     <!-- Footer -->
     <footer>
         <div class="container">
@@ -1932,320 +2309,294 @@
         </div>
     </footer>
 
-    <!-- Login/Signup Modal -->
+    <!-- Enhanced Login/Signup Modal -->
     <div class="modal" id="auth-modal">
         <div class="modal-content">
-            <span class="close-modal" onclick="closeModal()">&times;</span>
+            <button class="close-modal" onclick="closeModal()">&times;</button>
+            
+            <div class="form-header">
+                <h2 id="modal-title">Welcome Back</h2>
+                <p id="modal-subtitle">Sign in to your LuxuryStays account</p>
+            </div>
+
             <div class="modal-tabs">
-                <div class="modal-tab active" id="login-tab" onclick="switchTab('login')">Login</div>
-                <div class="modal-tab" id="signup-tab" onclick="switchTab('signup')">Sign Up</div>
+                <button class="modal-tab active" id="login-tab" onclick="switchTab('login')">Login</button>
+                <button class="modal-tab" id="signup-tab" onclick="switchTab('signup')">Sign Up</button>
             </div>
-            <div id="login-form">
-                <div class="form-group">
-                    <label for="login-email">Email</label>
-                    <input type="email" id="login-email" class="form-control" placeholder="Enter your email">
-                </div>
-                <div class="form-group">
-                    <label for="login-password">Password</label>
-                    <input type="password" id="login-password" class="form-control" placeholder="Enter your password">
-                </div>
-                <button class="btn btn-primary" style="width: 100%;" onclick="login()">
-                    <i class="fas fa-sign-in-alt"></i> Login
-                </button>
-                <p style="text-align: center; margin-top: 1.5rem;">
-                    <a href="#" style="color: var(--primary);">Forgot password?</a>
-                </p>
-                <p style="text-align: center; margin-top: 1rem; font-size: 0.9rem; color: var(--gray);">
-                    Demo: Use tobisamuel2024@gmail.com / John123
-                </p>
-            </div>
-            <div id="signup-form" style="display: none;">
-                <div class="form-group">
-                    <label for="signup-name">Full Name</label>
-                    <input type="text" id="signup-name" class="form-control" placeholder="Enter your full name">
-                </div>
-                <div class="form-group">
-                    <label for="signup-email">Email</label>
-                    <input type="email" id="signup-email" class="form-control" placeholder="Enter your email">
-                </div>
-                <div class="form-group">
-                    <label for="signup-password">Password</label>
-                    <input type="password" id="signup-password" class="form-control" placeholder="Create a password">
-                </div>
-                <button class="btn btn-primary" style="width: 100%;" onclick="signup()">
-                    <i class="fas fa-user-plus"></i> Create Account
-                </button>
-            </div>
-        </div>
-    </div>
 
-    <!-- Payment Modal -->
-    <div class="modal" id="payment-modal">
-        <div class="modal-content payment-modal">
-            <span class="close-modal" onclick="closePaymentModal()">&times;</span>
-            <h2 style="margin-bottom: 1.5rem;">Complete Your Booking</h2>
-            
-            <div class="payment-summary">
-                <h3 style="margin-bottom: 1rem;">Booking Summary</h3>
-                <div class="payment-summary-item">
-                    <span>Hotel:</span>
-                    <span id="payment-hotel-name">The Grand Plaza</span>
-                </div>
-                <div class="payment-summary-item">
-                    <span>Check-in:</span>
-                    <span id="payment-check-in">October 15, 2023</span>
-                </div>
-                <div class="payment-summary-item">
-                    <span>Check-out:</span>
-                    <span id="payment-check-out">October 20, 2023</span>
-                </div>
-                <div class="payment-summary-item">
-                    <span>Guests:</span>
-                    <span id="payment-guests">2 Adults</span>
-                </div>
-                <div class="payment-summary-item">
-                    <span>Price per night:</span>
-                    <span id="payment-price">₦29,900</span>
-                </div>
-                <div class="payment-summary-item payment-summary-total">
-                    <span>Total Amount:</span>
-                    <span id="payment-total">₦149,500</span>
-                </div>
-            </div>
-            
-            <div class="form-group">
-                <label for="payment-method">Payment Method</label>
-                <select id="payment-method" class="form-control">
-                    <option value="credit">Credit Card</option>
-                    <option value="debit">Debit Card</option>
-                    <option value="paypal">PayPal</option>
-                    <option value="bank">Bank Transfer</option>
-                </select>
-            </div>
-            
-            <div id="credit-card-details">
-                <div class="form-group">
-                    <label for="card-number">Card Number</label>
-                    <input type="text" id="card-number" class="form-control" placeholder="1234 5678 9012 3456">
-                </div>
-                <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 1rem;">
-                    <div class="form-group">
-                        <label for="expiry-date">Expiry Date</label>
-                        <input type="text" id="expiry-date" class="form-control" placeholder="MM/YY">
+            <div class="auth-form">
+                <!-- Login Form -->
+                <div id="login-form">
+                    <div class="input-group">
+                        <i class="fas fa-envelope"></i>
+                        <input type="email" id="login-email" class="form-control" placeholder="Enter your email">
                     </div>
-                    <div class="form-group">
-                        <label for="cvv">CVV</label>
-                        <input type="text" id="cvv" class="form-control" placeholder="123">
+                    <div class="input-group">
+                        <i class="fas fa-lock"></i>
+                        <input type="password" id="login-password" class="form-control" placeholder="Enter your password">
                     </div>
+                    
+                    <div class="remember-forgot">
+                        <label class="remember-me">
+                            <input type="checkbox" id="remember-me">
+                            <span>Remember me</span>
+                        </label>
+                        <a href="#" class="forgot-password">Forgot password?</a>
+                    </div>
+                    
+                    <button class="btn btn-primary" style="width: 100%;" onclick="login()" id="login-button">
+                        <i class="fas fa-sign-in-alt"></i> Sign In
+                    </button>
                 </div>
-                <div class="form-group">
-                    <label for="card-name">Name on Card</label>
-                    <input type="text" id="card-name" class="form-control" placeholder="Tobi Samuel">
-                </div>
-            </div>
-            
-            <button class="btn btn-primary" style="width: 100%; margin-top: 1.5rem;" onclick="processPayment()">
-                <i class="fas fa-lock"></i> Complete Payment
-            </button>
-        </div>
-    </div>
 
-    <!-- Hotel Details Modal -->
-    <div class="modal" id="hotel-details-modal">
-        <div class="modal-content hotel-details-modal">
-            <span class="close-modal" onclick="closeHotelDetailsModal()">&times;</span>
-            <div class="hotel-details-content" id="hotel-details-content">
-                <!-- Hotel details will be populated by JavaScript -->
+                <!-- Signup Form -->
+                <div id="signup-form" style="display: none;">
+                    <div class="input-group">
+                        <i class="fas fa-user"></i>
+                        <input type="text" id="signup-name" class="form-control" placeholder="Full name">
+                    </div>
+                    <div class="input-group">
+                        <i class="fas fa-envelope"></i>
+                        <input type="email" id="signup-email" class="form-control" placeholder="Email address">
+                    </div>
+                    <div class="input-group">
+                        <i class="fas fa-lock"></i>
+                        <input type="password" id="signup-password" class="form-control" placeholder="Create password">
+                    </div>
+                    <div class="input-group">
+                        <i class="fas fa-lock"></i>
+                        <input type="password" id="signup-confirm-password" class="form-control" placeholder="Confirm password">
+                    </div>
+                    
+                    <button class="btn btn-primary" style="width: 100%; margin-top: 1rem;" onclick="signup()" id="signup-button">
+                        <i class="fas fa-user-plus"></i> Create Account
+                    </button>
+                </div>
             </div>
-            <a href="#" class="back-to-site" onclick="closeHotelDetailsModal()">
-                <i class="fas fa-arrow-left"></i> Back to Site
-            </a>
         </div>
     </div>
 
     <script>
-        // API Configuration
-        const API_CONFIG = {
-            baseURL: 'https://booking-com.p.rapidapi.com',
-            apiKey: '', // Leave empty to use demo data
-            endpoints: {
-                search: '/v1/hotels/search',
-                locations: '/v1/hotels/locations'
+        // Backend Configuration - UPDATE THESE WITH YOUR ACTUAL BACKEND URLS
+        const BACKEND_CONFIG = {
+            BASE_URL: 'http://localhost:3000/api', // Update with your backend URL
+            ENDPOINTS: {
+                LOGIN: '/auth/login',
+                SIGNUP: '/auth/signup',
+                PROFILE: '/user/profile',
+                UPDATE_PROFILE: '/user/update',
+                HOTELS: '/hotels',
+                BOOKINGS: '/bookings',
+                PAYMENT_METHODS: '/payment-methods',
+                ORDERS: '/orders'
             }
         };
 
-        // State management
+        // Enhanced JavaScript with backend integration
         const state = {
             user: null,
-            bookings: [],
-            destinations: [
-                "New York, USA",
-                "Bali, Indonesia",
-                "Paris, France",
-                "London, UK",
-                "Tokyo, Japan",
-                "Sydney, Australia",
-                "Dubai, UAE",
-                "Rome, Italy",
-                "Barcelona, Spain",
-                "Cancun, Mexico"
-            ],
             currentSection: 'home',
-            selectedState: null,
-            currentHotel: null,
-            nigerianStates: [
-                "Abia", "Adamawa", "Akwa Ibom", "Anambra", "Bauchi", "Bayelsa", 
-                "Benue", "Borno", "Cross River", "Delta", "Ebonyi", "Edo", 
-                "Ekiti", "Enugu", "FCT", "Gombe", "Imo", "Jigawa", 
-                "Kaduna", "Kano", "Katsina", "Kebbi", "Kogi", "Kwara", 
-                "Lagos", "Nasarawa", "Niger", "Ogun", "Ondo", "Osun", 
-                "Oyo", "Plateau", "Rivers", "Sokoto", "Taraba", "Yobe", "Zamfara"
-            ],
-            // Mock API data for Nigerian hotels (fallback)
-            nigerianHotels: [
-                {
-                    id: 1,
-                    name: "Eko Hotels & Suites",
-                    location: "Victoria Island, Lagos",
-                    price: 45000,
-                    rating: 4.5,
-                    image: "https://images.unsplash.com/photo-1566073771259-6a8506099945?ixlib=rb-4.0.3&auto=format&fit=crop&w=600&q=80",
-                    description: "A luxurious 5-star hotel located in the heart of Victoria Island, offering world-class amenities and stunning views of the Atlantic Ocean.",
-                    amenities: ["Free WiFi", "Swimming Pool", "Spa", "Fitness Center", "Restaurant"],
-                    rooms: [
-                        { type: "Standard Room", price: 45000, available: 5 },
-                        { type: "Deluxe Room", price: 65000, available: 3 },
-                        { type: "Executive Suite", price: 120000, available: 2 }
-                    ]
-                },
-                {
-                    id: 2,
-                    name: "Radisson Blu Hotel",
-                    location: "Ikeja, Lagos",
-                    price: 38000,
-                    rating: 4.3,
-                    image: "https://images.unsplash.com/photo-1582719508461-905c673771fd?ixlib=rb-4.0.3&auto=format&fit=crop&w=600&q=80",
-                    description: "A contemporary hotel in the bustling Ikeja district, offering modern comforts and excellent service for business and leisure travelers.",
-                    amenities: ["Free WiFi", "Swimming Pool", "Business Center", "Fitness Center", "Bar"],
-                    rooms: [
-                        { type: "Standard Room", price: 38000, available: 8 },
-                        { type: "Superior Room", price: 52000, available: 4 },
-                        { type: "Business Suite", price: 85000, available: 2 }
-                    ]
-                },
-                {
-                    id: 3,
-                    name: "The George Hotel",
-                    location: "Ikoyi, Lagos",
-                    price: 52000,
-                    rating: 4.7,
-                    image: "https://images.unsplash.com/photo-1611892440504-42a792e24d32?ixlib=rb-4.0.3&auto=format&fit=crop&w=600&q=80",
-                    description: "An elegant boutique hotel in the prestigious Ikoyi neighborhood, known for its personalized service and exquisite dining options.",
-                    amenities: ["Free WiFi", "Swimming Pool", "Fine Dining", "Spa", "Concierge"],
-                    rooms: [
-                        { type: "Deluxe Room", price: 52000, available: 4 },
-                        { type: "Executive Room", price: 75000, available: 3 },
-                        { type: "Presidential Suite", price: 150000, available: 1 }
-                    ]
-                },
-                {
-                    id: 4,
-                    name: "Transcorp Hilton",
-                    location: "Abuja",
-                    price: 55000,
-                    rating: 4.4,
-                    image: "https://images.unsplash.com/photo-1520250497591-112f2f40a3f4?ixlib=rb-4.0.3&auto=format&fit=crop&w=600&q=80",
-                    description: "A landmark hotel in Nigeria's capital city, offering luxurious accommodations and premium facilities for both business and leisure travelers.",
-                    amenities: ["Free WiFi", "Swimming Pool", "Conference Facilities", "Spa", "Multiple Restaurants"],
-                    rooms: [
-                        { type: "Standard Room", price: 55000, available: 6 },
-                        { type: "Executive Room", price: 80000, available: 4 },
-                        { type: "Presidential Suite", price: 180000, available: 1 }
-                    ]
-                },
-                {
-                    id: 5,
-                    name: "Le Meridien",
-                    location: "Ibadan, Oyo",
-                    price: 42000,
-                    rating: 4.2,
-                    image: "https://images.unsplash.com/photo-1564501049412-61c2a3083791?ixlib=rb-4.0.3&auto=format&fit=crop&w=600&q=80",
-                    description: "A modern hotel offering comfortable accommodations in the historic city of Ibadan, with excellent amenities and service.",
-                    amenities: ["Free WiFi", "Swimming Pool", "Restaurant", "Fitness Center", "Bar"],
-                    rooms: [
-                        { type: "Standard Room", price: 42000, available: 7 },
-                        { type: "Deluxe Room", price: 58000, available: 3 },
-                        { type: "Suite", price: 95000, available: 2 }
-                    ]
-                },
-                {
-                    id: 6,
-                    name: "Sheraton Hotel",
-                    location: "Abuja",
-                    price: 60000,
-                    rating: 4.6,
-                    image: "https://images.unsplash.com/photo-1542314831-068cd1dbfeeb?ixlib=rb-4.0.3&auto=format&fit=crop&w=600&q=80",
-                    description: "An internationally renowned hotel offering premium accommodations and services in the heart of Abuja.",
-                    amenities: ["Free WiFi", "Swimming Pool", "Spa", "Fitness Center", "Fine Dining"],
-                    rooms: [
-                        { type: "Standard Room", price: 60000, available: 5 },
-                        { type: "Club Room", price: 85000, available: 3 },
-                        { type: "Executive Suite", price: 150000, available: 2 }
-                    ]
-                }
-            ],
-            // Food items for room service
-            foodItems: {
-                "Breakfast": [
-                    { name: "Continental Breakfast", price: 4500, image: "https://images.unsplash.com/photo-1551782450-17144efb9c50?ixlib=rb-4.0.3&auto=format&fit=crop&w=300&q=80" },
-                    { name: "Nigerian Breakfast", price: 3500, image: "https://images.unsplash.com/photo-1592417817098-8fd3d9eb14a5?ixlib=rb-4.0.3&auto=format&fit=crop&w=300&q=80" },
-                    { name: "Pancakes with Syrup", price: 3000, image: "https://images.unsplash.com/photo-1567620905732-2d1ec7ab7445?ixlib=rb-4.0.3&auto=format&fit=crop&w=300&q=80" }
-                ],
-                "Lunch": [
-                    { name: "Jollof Rice with Chicken", price: 5000, image: "https://images.unsplash.com/photo-1592417817098-8fd3d9eb14a5?ixlib=rb-4.0.3&auto=format&fit=crop&w=300&q=80" },
-                    { name: "Fried Rice with Beef", price: 5500, image: "https://images.unsplash.com/photo-1555939594-58d7cb561ad1?ixlib=rb-4.0.3&auto=format&fit=crop&w=300&q=80" },
-                    { name: "Pasta Carbonara", price: 4500, image: "https://images.unsplash.com/photo-1621996346565-e3dbc353d2e5?ixlib=rb-4.0.3&auto=format&fit=crop&w=300&q=80" }
-                ],
-                "Dinner": [
-                    { name: "Grilled Salmon", price: 8500, image: "https://images.unsplash.com/photo-1467003909585-2f8a72700288?ixlib=rb-4.0.3&auto=format&fit=crop&w=300&q=80" },
-                    { name: "Beef Steak", price: 7500, image: "https://images.unsplash.com/photo-1546964124-0cce460f38ef?ixlib=rb-4.0.3&auto=format&fit=crop&w=300&q=80" },
-                    { name: "Chicken Parmesan", price: 6000, image: "https://images.unsplash.com/photo-1563379926898-05f4575a45d8?ixlib=rb-4.0.3&auto=format&fit=crop&w=300&q=80" }
-                ],
-                "Drinks": [
-                    { name: "Fresh Orange Juice", price: 1500, image: "https://images.unsplash.com/photo-1621506289937-a8e4df240d0b?ixlib=rb-4.0.3&auto=format&fit=crop&w=300&q=80" },
-                    { name: "Cappuccino", price: 2000, image: "https://images.unsplash.com/photo-1572442388796-11668a67e53d?ixlib=rb-4.0.3&auto=format&fit=crop&w=300&q=80" },
-                    { name: "Mineral Water", price: 800, image: "https://images.unsplash.com/photo-1548839140-29a749e1cf4d?ixlib=rb-4.0.3&auto=format&fit=crop&w=300&q=80" }
-                ]
-            }
+            hotels: [],
+            selectedHotel: null,
+            token: localStorage.getItem('authToken')
         };
 
         // DOM Elements
         const authModal = document.getElementById('auth-modal');
-        const paymentModal = document.getElementById('payment-modal');
-        const hotelDetailsModal = document.getElementById('hotel-details-modal');
         const userDashboard = document.getElementById('userDashboard');
         const userAvatar = document.getElementById('userAvatar');
         const userName = document.getElementById('userName');
-        const pageSections = document.querySelectorAll('.page-section');
-        const navLinks = document.querySelectorAll('.nav-link');
-        const searchWidget = document.getElementById('searchWidget');
+        const welcomeUserName = document.getElementById('welcomeUserName');
         const loginPrompt = document.getElementById('login-prompt');
-        const orderDetails = document.getElementById('orderDetails');
-        const orderNotFound = document.getElementById('orderNotFound');
-        const orderCheckForm = document.getElementById('orderCheckForm');
-        const staffOrderCheckForm = document.getElementById('staffOrderCheckForm');
-        const statesList = document.getElementById('statesList');
-        const stateInput = document.getElementById('state');
-        const featuredHotels = document.getElementById('featuredHotels');
-        const destinationHotels = document.getElementById('destinationHotels');
-        const dealsHotels = document.getElementById('dealsHotels');
-        const moreHotelsBtn = document.getElementById('moreHotelsBtn');
-        const viewDealBtn = document.getElementById('viewDealBtn');
-        const staffTabs = document.querySelectorAll('.staff-tab');
-        const staffContents = document.querySelectorAll('.staff-content');
-        const hotelsTableBody = document.getElementById('hotelsTableBody');
+        const authButtons = document.getElementById('authButtons');
+        const modalTitle = document.getElementById('modal-title');
+        const modalSubtitle = document.getElementById('modal-subtitle');
+        const mobileToggle = document.getElementById('mobileToggle');
+        const mainNav = document.getElementById('mainNav');
+        const preloader = document.getElementById('preloader');
+        const hotelGrid = document.getElementById('hotelGrid');
+        const dashboardBottomNav = document.querySelector('.dashboard-bottom-nav');
+        const footer = document.querySelector('footer');
+        const notification = document.getElementById('notification');
+        const notificationText = document.getElementById('notification-text');
 
-        // Initialize Carousel
+        // API Service Functions
+        const apiService = {
+            // Generic API request function
+            async request(endpoint, options = {}) {
+                const url = `${BACKEND_CONFIG.BASE_URL}${endpoint}`;
+                const config = {
+                    headers: {
+                        'Content-Type': 'application/json',
+                        ...options.headers
+                    },
+                    ...options
+                };
+
+                // Add auth token if available
+                if (state.token) {
+                    config.headers.Authorization = `Bearer ${state.token}`;
+                }
+
+                try {
+                    const response = await fetch(url, config);
+                    const data = await response.json();
+
+                    if (!response.ok) {
+                        throw new Error(data.message || 'API request failed');
+                    }
+
+                    return data;
+                } catch (error) {
+                    console.error('API request failed:', error);
+                    throw error;
+                }
+            },
+
+            // Auth endpoints
+            async login(email, password) {
+                return this.request(BACKEND_CONFIG.ENDPOINTS.LOGIN, {
+                    method: 'POST',
+                    body: JSON.stringify({ email, password })
+                });
+            },
+
+            async signup(name, email, password) {
+                return this.request(BACKEND_CONFIG.ENDPOINTS.SIGNUP, {
+                    method: 'POST',
+                    body: JSON.stringify({ name, email, password })
+                });
+            },
+
+            // User endpoints
+            async getProfile() {
+                return this.request(BACKEND_CONFIG.ENDPOINTS.PROFILE);
+            },
+
+            async updateProfile(profileData) {
+                return this.request(BACKEND_CONFIG.ENDPOINTS.UPDATE_PROFILE, {
+                    method: 'PUT',
+                    body: JSON.stringify(profileData)
+                });
+            },
+
+            // Hotel endpoints
+            async getHotels() {
+                return this.request(BACKEND_CONFIG.ENDPOINTS.HOTELS);
+            },
+
+            // Booking endpoints
+            async getBookings() {
+                return this.request(BACKEND_CONFIG.ENDPOINTS.BOOKINGS);
+            },
+
+            async createBooking(bookingData) {
+                return this.request(BACKEND_CONFIG.ENDPOINTS.BOOKINGS, {
+                    method: 'POST',
+                    body: JSON.stringify(bookingData)
+                });
+            },
+
+            // Payment endpoints
+            async getPaymentMethods() {
+                return this.request(BACKEND_CONFIG.ENDPOINTS.PAYMENT_METHODS);
+            },
+
+            // Order endpoints
+            async getOrder(orderId, email) {
+                return this.request(`${BACKEND_CONFIG.ENDPOINTS.ORDERS}/${orderId}?email=${email}`);
+            }
+        };
+
+        // Notification System
+        function showNotification(message, type = 'info', duration = 5000) {
+            notificationText.textContent = message;
+            notification.className = `notification ${type} show`;
+            
+            setTimeout(() => {
+                notification.classList.remove('show');
+            }, duration);
+        }
+
+        // Preloader functionality
+        window.addEventListener('load', function() {
+            setTimeout(function() {
+                preloader.classList.add('fade-out');
+                setTimeout(function() {
+                    preloader.style.display = 'none';
+                }, 500);
+            }, 1500);
+        });
+
+        // Check if user is already logged in
+        async function checkAuthStatus() {
+            if (state.token) {
+                try {
+                    const userData = await apiService.getProfile();
+                    state.user = userData;
+                    updateUIAfterLogin();
+                    showNotification('Welcome back!', 'success');
+                } catch (error) {
+                    // Token is invalid, clear it
+                    localStorage.removeItem('authToken');
+                    state.token = null;
+                    console.error('Authentication failed:', error);
+                }
+            }
+        }
+
+        // Mobile navigation toggle
+        mobileToggle.addEventListener('click', function() {
+            mainNav.classList.toggle('active');
+            const icon = this.querySelector('i');
+            if (mainNav.classList.contains('active')) {
+                icon.classList.remove('fa-bars');
+                icon.classList.add('fa-times');
+            } else {
+                icon.classList.remove('fa-times');
+                icon.classList.add('fa-bars');
+            }
+        });
+
+        // Navigation between sections
+        function showSection(sectionId) {
+            // Hide all sections
+            document.querySelectorAll('.page-section').forEach(section => {
+                section.classList.remove('active');
+            });
+            
+            // Show the selected section
+            const targetSection = document.getElementById(sectionId + '-section');
+            if (targetSection) {
+                targetSection.classList.add('active');
+            }
+            
+            // Update active nav link
+            document.querySelectorAll('.nav-link').forEach(link => {
+                link.classList.remove('active');
+                if (link.getAttribute('data-section') === sectionId) {
+                    link.classList.add('active');
+                }
+            });
+            
+            // Close mobile nav if open
+            mainNav.classList.remove('active');
+            mobileToggle.querySelector('i').classList.remove('fa-times');
+            mobileToggle.querySelector('i').classList.add('fa-bars');
+            
+            state.currentSection = sectionId;
+        }
+
+        // Set up navigation links
+        document.querySelectorAll('.nav-link').forEach(link => {
+            link.addEventListener('click', function(e) {
+                e.preventDefault();
+                const section = this.getAttribute('data-section');
+                showSection(section);
+            });
+        });
+
+        // Carousel functionality
         let currentSlide = 0;
         const slides = document.querySelectorAll('.carousel-slide');
         const dots = document.querySelectorAll('.carousel-dot');
@@ -2264,224 +2615,14 @@
             showSlide(nextIndex);
         }
 
-        // Auto advance slides
+        // Auto-advance carousel
         setInterval(nextSlide, 5000);
 
-        // Add click events to dots
         dots.forEach(dot => {
             dot.addEventListener('click', () => {
                 showSlide(parseInt(dot.getAttribute('data-index')));
             });
         });
-
-        // Navigation functionality
-        function showSection(sectionId) {
-            // Hide all sections
-            pageSections.forEach(section => {
-                section.classList.remove('active');
-            });
-            
-            // Show the selected section
-            document.getElementById(sectionId).classList.add('active');
-            
-            // Update active nav link
-            navLinks.forEach(link => {
-                link.classList.remove('active');
-                if (link.getAttribute('data-section') === sectionId.replace('-section', '')) {
-                    link.classList.add('active');
-                }
-            });
-            
-            // Update state
-            state.currentSection = sectionId.replace('-section', '');
-        }
-
-        // Add click events to navigation links
-        navLinks.forEach(link => {
-            link.addEventListener('click', function(e) {
-                e.preventDefault();
-                const section = this.getAttribute('data-section');
-                showSection(section + '-section');
-            });
-        });
-
-        // Dashboard tabs functionality
-        const dashboardTabs = document.querySelectorAll('.dashboard-tab');
-        const dashboardContents = document.querySelectorAll('.dashboard-content');
-
-        dashboardTabs.forEach(tab => {
-            tab.addEventListener('click', () => {
-                const tabId = tab.getAttribute('data-tab');
-                
-                // Update active tab
-                dashboardTabs.forEach(t => t.classList.remove('active'));
-                tab.classList.add('active');
-                
-                // Show corresponding content
-                dashboardContents.forEach(content => {
-                    content.classList.remove('active');
-                    if (content.id === tabId + '-content') {
-                        content.classList.add('active');
-                    }
-                });
-            });
-        });
-
-        // Staff tabs functionality
-        staffTabs.forEach(tab => {
-            tab.addEventListener('click', () => {
-                const tabId = tab.getAttribute('data-tab');
-                
-                // Update active tab
-                staffTabs.forEach(t => t.classList.remove('active'));
-                tab.classList.add('active');
-                
-                // Show corresponding content
-                staffContents.forEach(content => {
-                    content.classList.remove('active');
-                    if (content.id === tabId + '-content') {
-                        content.classList.add('active');
-                    }
-                });
-            });
-        });
-
-        // Order check functionality
-        orderCheckForm.addEventListener('submit', function(e) {
-            e.preventDefault();
-            const orderNumber = document.getElementById('order-number').value;
-            const orderEmail = document.getElementById('order-email').value;
-            
-            if (!orderNumber || !orderEmail) {
-                alert('Please enter both order number and email address');
-                return;
-            }
-            
-            // Simulate API call to check order
-            checkOrder(orderNumber, orderEmail);
-        });
-
-        // Staff order check functionality
-        staffOrderCheckForm.addEventListener('submit', function(e) {
-            e.preventDefault();
-            const orderNumber = document.getElementById('staff-order-number').value;
-            const email = document.getElementById('staff-customer-email').value;
-            const phone = document.getElementById('staff-customer-phone').value;
-            
-            if (!orderNumber && !email && !phone) {
-                alert('Please enter at least one search criteria');
-                return;
-            }
-            
-            // Simulate API call to check order
-            checkStaffOrder(orderNumber, email, phone);
-        });
-
-        // Function to check order via API
-        function checkOrder(orderNumber, email) {
-            // Show loading state
-            const submitBtn = orderCheckForm.querySelector('button');
-            const originalText = submitBtn.innerHTML;
-            submitBtn.innerHTML = '<span class="loading"></span> Checking...';
-            submitBtn.disabled = true;
-            
-            // Simulate API call with timeout
-            setTimeout(() => {
-                // Reset button
-                submitBtn.innerHTML = originalText;
-                submitBtn.disabled = false;
-                
-                // Mock response - in real app, this would be based on API response
-                if (orderNumber === "LS20231015" && email === "tobisamuel2024@gmail.com") {
-                    // Order found
-                    orderDetails.classList.add('active');
-                    orderNotFound.classList.remove('active');
-                    
-                    // Scroll to order details
-                    orderDetails.scrollIntoView({ behavior: 'smooth' });
-                } else {
-                    // Order not found
-                    orderDetails.classList.remove('active');
-                    orderNotFound.classList.add('active');
-                    
-                    // Scroll to not found message
-                    orderNotFound.scrollIntoView({ behavior: 'smooth' });
-                }
-            }, 1500);
-        }
-
-        // Function to check staff order via API
-        function checkStaffOrder(orderNumber, email, phone) {
-            // Show loading state
-            const submitBtn = staffOrderCheckForm.querySelector('button');
-            const originalText = submitBtn.innerHTML;
-            submitBtn.innerHTML = '<span class="loading"></span> Searching...';
-            submitBtn.disabled = true;
-            
-            // Simulate API call with timeout
-            setTimeout(() => {
-                // Reset button
-                submitBtn.innerHTML = originalText;
-                submitBtn.disabled = false;
-                
-                // Mock response - in real app, this would be based on API response
-                if (orderNumber === "LS20231015" || email === "tobisamuel2024@gmail.com" || phone === "+2348123456789") {
-                    // Order found
-                    orderDetails.classList.add('active');
-                    orderNotFound.classList.remove('active');
-                    
-                    // Scroll to order details
-                    orderDetails.scrollIntoView({ behavior: 'smooth' });
-                    
-                    // Show success message
-                    alert('Order found! Details displayed below.');
-                } else {
-                    // Order not found
-                    orderDetails.classList.remove('active');
-                    orderNotFound.classList.add('active');
-                    
-                    // Scroll to not found message
-                    orderNotFound.scrollIntoView({ behavior: 'smooth' });
-                }
-            }, 1500);
-        }
-
-        // Order not found actions
-        function retryOrderSearch() {
-            document.getElementById('order-number').value = '';
-            document.getElementById('order-email').value = '';
-            orderNotFound.classList.remove('active');
-            document.getElementById('order-number').focus();
-        }
-
-        function contactSupport() {
-            alert('Redirecting to customer support...');
-            // In a real app, this would open a chat or redirect to support page
-        }
-
-        function searchByPhone() {
-            const phone = prompt('Please enter your phone number:');
-            if (phone) {
-                alert(`Searching for orders with phone: ${phone}`);
-                // In a real app, this would trigger a new API call
-            }
-        }
-
-        // Order details buttons functionality
-        function printReceipt() {
-            alert('Printing receipt...');
-            // In a real app, this would open print dialog
-        }
-
-        function emailDetails() {
-            alert('Sending email with order details...');
-            // In a real app, this would trigger email sending
-        }
-
-        function getHelp() {
-            alert('Opening help center...');
-            // In a real app, this would redirect to help page
-        }
 
         // Modal functionality
         function openModal(type) {
@@ -2497,663 +2638,682 @@
             authModal.style.display = 'none';
         }
 
-        function openPaymentModal(hotel) {
-            if (!state.user) {
-                openModal('login');
-                return;
-            }
-            
-            state.currentHotel = hotel;
-            
-            // Get dynamic pricing based on dates
-            const checkIn = new Date(document.getElementById('check-in').value);
-            const checkOut = new Date(document.getElementById('check-out').value);
-            const nights = Math.ceil((checkOut - checkIn) / (1000 * 60 * 60 * 24));
-            
-            // Use API-driven pricing or fallback to hotel data
-            const basePrice = hotel.price || 25000;
-            const total = basePrice * nights;
-            
-            // Update modal with dynamic pricing
-            document.getElementById('payment-hotel-name').textContent = hotel.name;
-            document.getElementById('payment-check-in').textContent = formatDate(checkIn);
-            document.getElementById('payment-check-out').textContent = formatDate(checkOut);
-            document.getElementById('payment-guests').textContent = document.getElementById('guests').value + ' Guests';
-            document.getElementById('payment-price').textContent = `₦${basePrice.toLocaleString()}`;
-            document.getElementById('payment-total').textContent = `₦${total.toLocaleString()}`;
-            
-            paymentModal.style.display = 'flex';
-        }
-
-        function closePaymentModal() {
-            paymentModal.style.display = 'none';
-        }
-
-        function openHotelDetailsModal(hotel) {
-            state.currentHotel = hotel;
-            
-            const modalContent = document.getElementById('hotel-details-content');
-            modalContent.innerHTML = `
-                <h2>${hotel.name}</h2>
-                <div class="hotel-details-header">
-                    <div class="hotel-details-image">
-                        <img src="${hotel.image}" alt="${hotel.name}">
-                    </div>
-                    <div class="hotel-details-info">
-                        <p><strong>Location:</strong> ${hotel.location}</p>
-                        <p><strong>Rating:</strong> ${getStarRating(hotel.rating)} (${hotel.rating}/5)</p>
-                        <p><strong>Starting from:</strong> ₦${hotel.price.toLocaleString()} per night</p>
-                        <p>${hotel.description}</p>
-                        <div class="amenities">
-                            <h4>Amenities:</h4>
-                            <div style="display: flex; flex-wrap: wrap; gap: 0.5rem; margin-top: 0.5rem;">
-                                ${hotel.amenities.map(amenity => `<span style="background: var(--light); padding: 0.3rem 0.7rem; border-radius: 20px; font-size: 0.9rem;">${amenity}</span>`).join('')}
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                
-                <div class="room-availability">
-                    <h3>Room Availability</h3>
-                    ${hotel.rooms.map(room => `
-                        <div class="room-type">
-                            <div class="room-type-header">
-                                <div>
-                                    <h4>${room.type}</h4>
-                                    <p>₦${room.price.toLocaleString()} per night</p>
-                                </div>
-                                <div>
-                                    <p><strong>Available:</strong> ${room.available} rooms</p>
-                                    <button class="btn btn-primary" onclick="openPaymentModal(state.currentHotel)">Book Now</button>
-                                </div>
-                            </div>
-                        </div>
-                    `).join('')}
-                </div>
-                
-                <div class="food-ordering">
-                    <h3>Room Service & Food Ordering</h3>
-                    <p>Order food and services to be delivered to your room during your stay.</p>
-                    
-                    <div class="food-categories">
-                        <div class="food-category active" data-category="Breakfast">Breakfast</div>
-                        <div class="food-category" data-category="Lunch">Lunch</div>
-                        <div class="food-category" data-category="Dinner">Dinner</div>
-                        <div class="food-category" data-category="Drinks">Drinks</div>
-                    </div>
-                    
-                    <div class="food-items" id="food-items-container">
-                        ${renderFoodItems('Breakfast')}
-                    </div>
-                    
-                    <div style="margin-top: 1.5rem;">
-                        <button class="btn btn-secondary">
-                            <i class="fas fa-utensils"></i> Order Room Service
-                        </button>
-                    </div>
-                </div>
-            `;
-            
-            // Add event listeners to food categories
-            document.querySelectorAll('.food-category').forEach(category => {
-                category.addEventListener('click', function() {
-                    document.querySelectorAll('.food-category').forEach(c => c.classList.remove('active'));
-                    this.classList.add('active');
-                    const category = this.getAttribute('data-category');
-                    document.getElementById('food-items-container').innerHTML = renderFoodItems(category);
-                });
-            });
-            
-            hotelDetailsModal.style.display = 'flex';
-        }
-
-        function closeHotelDetailsModal() {
-            hotelDetailsModal.style.display = 'none';
-        }
-
-        function renderFoodItems(category) {
-            return state.foodItems[category].map(item => `
-                <div class="food-item">
-                    <img src="${item.image}" alt="${item.name}">
-                    <h4>${item.name}</h4>
-                    <p>₦${item.price.toLocaleString()}</p>
-                    <button class="btn btn-outline" style="margin-top: 0.5rem;">
-                        <i class="fas fa-plus"></i> Add to Order
-                    </button>
-                </div>
-            `).join('');
-        }
-
         function switchTab(tab) {
             if (tab === 'login') {
                 document.getElementById('login-form').style.display = 'block';
                 document.getElementById('signup-form').style.display = 'none';
                 document.getElementById('login-tab').classList.add('active');
                 document.getElementById('signup-tab').classList.remove('active');
+                modalTitle.textContent = 'Welcome Back';
+                modalSubtitle.textContent = 'Sign in to your LuxuryStays account';
             } else {
                 document.getElementById('login-form').style.display = 'none';
                 document.getElementById('signup-form').style.display = 'block';
                 document.getElementById('login-tab').classList.remove('active');
                 document.getElementById('signup-tab').classList.add('active');
+                modalTitle.textContent = 'Join LuxuryStays';
+                modalSubtitle.textContent = 'Create your account to start booking';
             }
         }
 
-        // Authentication functions
-        function login() {
+        // Enhanced login function with backend integration
+        async function login() {
             const email = document.getElementById('login-email').value;
             const password = document.getElementById('login-password').value;
+            const loginButton = document.getElementById('login-button');
             
             if (!email || !password) {
-                alert('Please enter both email and password');
+                showNotification('Please enter email and password', 'error');
                 return;
             }
             
-            // Check for specific credentials
-            if (email === 'tobisamuel2024@gmail.com' && password === 'John123') {
-                // Set user state
-                state.user = {
-                    name: 'Tobi Samuel',
-                    email: email
-                };
+            // Show loading state
+            loginButton.classList.add('loading');
+            loginButton.disabled = true;
+            
+            try {
+                const response = await apiService.login(email, password);
                 
-                // Update UI
-                userAvatar.textContent = state.user.name.charAt(0).toUpperCase();
-                userName.textContent = state.user.name;
-                userDashboard.style.display = 'block';
+                // Store token and user data
+                state.token = response.token;
+                state.user = response.user;
+                localStorage.setItem('authToken', response.token);
                 
-                // Enable search functionality
-                searchWidget.style.opacity = "1";
-                loginPrompt.style.display = "none";
-                
-                // Close modal
+                updateUIAfterLogin();
                 closeModal();
+                showNotification('Login successful!', 'success');
                 
-                // Show success message
-                alert('Login successful! Welcome to LuxuryStays.');
-                
-                // Populate hotels table in dashboard
-                populateHotelsTable();
-            } else {
-                alert('Invalid email or password. Please try again.');
+            } catch (error) {
+                console.error('Login failed:', error);
+                showNotification(error.message || 'Login failed. Please try again.', 'error');
+            } finally {
+                // Reset loading state
+                loginButton.classList.remove('loading');
+                loginButton.disabled = false;
             }
         }
 
-        function signup() {
+        // Enhanced signup function with backend integration
+        async function signup() {
             const name = document.getElementById('signup-name').value;
             const email = document.getElementById('signup-email').value;
             const password = document.getElementById('signup-password').value;
+            const confirmPassword = document.getElementById('signup-confirm-password').value;
+            const signupButton = document.getElementById('signup-button');
             
-            if (!name || !email || !password) {
-                alert('Please enter your name, email and password');
+            if (!name || !email || !password || !confirmPassword) {
+                showNotification('Please fill in all fields', 'error');
                 return;
             }
             
-            // Set user state
-            state.user = {
-                name: name,
-                email: email
-            };
+            if (password !== confirmPassword) {
+                showNotification('Passwords do not match', 'error');
+                return;
+            }
             
-            // Update UI
-            userAvatar.textContent = state.user.name.charAt(0).toUpperCase();
-            userName.textContent = state.user.name;
-            userDashboard.style.display = 'block';
+            if (password.length < 6) {
+                showNotification('Password must be at least 6 characters', 'error');
+                return;
+            }
             
-            // Enable search functionality
-            searchWidget.style.opacity = "1";
-            loginPrompt.style.display = "none";
+            // Show loading state
+            signupButton.classList.add('loading');
+            signupButton.disabled = true;
             
-            // Close modal
-            closeModal();
-            
-            // Show success message
-            alert('Account created successfully! Welcome to LuxuryStays.');
-            
-            // Populate hotels table in dashboard
-            populateHotelsTable();
-        }
-
-        function logout() {
-            state.user = null;
-            userDashboard.style.display = 'none';
-            
-            // Disable search functionality
-            searchWidget.style.opacity = "0.7";
-            loginPrompt.style.display = "block";
-            
-            alert('You have been logged out successfully.');
-        }
-
-        // Close modal when clicking outside
-        window.onclick = function(event) {
-            if (event.target === authModal) {
+            try {
+                const response = await apiService.signup(name, email, password);
+                
+                // Store token and user data
+                state.token = response.token;
+                state.user = response.user;
+                localStorage.setItem('authToken', response.token);
+                
+                updateUIAfterLogin();
                 closeModal();
-            }
-            if (event.target === paymentModal) {
-                closePaymentModal();
-            }
-            if (event.target === hotelDetailsModal) {
-                closeHotelDetailsModal();
-            }
-        }
-
-        // Set minimum date for check-in to today
-        const today = new Date().toISOString().split('T')[0];
-        document.getElementById('check-in').setAttribute('min', today);
-        
-        // Set minimum date for check-out to check-in date
-        document.getElementById('check-in').addEventListener('change', function() {
-            const checkInDate = this.value;
-            document.getElementById('check-out').setAttribute('min', checkInDate);
-        });
-
-        // Fixed form submission with API integration
-        document.getElementById('searchForm').addEventListener('submit', function(e) {
-            e.preventDefault();
-            
-            const stateValue = document.getElementById('state').value;
-            const destination = document.getElementById('destination').value;
-            const checkIn = document.getElementById('check-in').value;
-            const checkOut = document.getElementById('check-out').value;
-            
-            if (!stateValue) {
-                alert('Please select a state first');
-                return;
-            }
-            
-            // Use the selected state as destination if destination is empty
-            const searchDestination = destination || stateValue;
-            
-            if (!checkIn || !checkOut) {
-                alert('Please select check-in and check-out dates');
-                return;
-            }
-            
-            searchHotels(stateValue, searchDestination);
-        });
-
-        // Nigerian states functionality
-        function populateStates() {
-            statesList.innerHTML = '';
-            state.nigerianStates.forEach(stateName => {
-                const div = document.createElement('div');
-                div.textContent = stateName;
-                div.classList.add('state-item');
-                div.addEventListener('click', () => {
-                    stateInput.value = stateName;
-                    statesList.style.display = 'none';
-                    // Auto-fill destination with the selected state
-                    document.getElementById('destination').value = stateName;
-                    state.selectedState = stateName;
-                    // Trigger search when state is selected
-                    if (document.getElementById('check-in').value && document.getElementById('check-out').value) {
-                        searchHotels(stateName, stateName);
-                    }
-                });
-                statesList.appendChild(div);
-            });
-        }
-
-        // Show states dropdown when clicking state input
-        stateInput.addEventListener('click', function() {
-            statesList.style.display = 'block';
-        });
-
-        // Close states dropdown when clicking outside
-        document.addEventListener('click', function(e) {
-            if (!stateInput.contains(e.target) && !statesList.contains(e.target)) {
-                statesList.style.display = 'none';
-            }
-        });
-
-        // API function to get location ID
-        async function getLocationId(destination) {
-            try {
-                // If API key is not configured, return null to use demo data
-                if (!API_CONFIG.apiKey) {
-                    return null;
-                }
-                
-                const response = await fetch(`${API_CONFIG.baseURL}${API_CONFIG.endpoints.locations}?name=${encodeURIComponent(destination)}&locale=en-gb`, {
-                    method: 'GET',
-                    headers: {
-                        'X-RapidAPI-Key': API_CONFIG.apiKey,
-                        'X-RapidAPI-Host': 'booking-com.p.rapidapi.com'
-                    }
-                });
-                
-                if (!response.ok) {
-                    throw new Error('API request failed');
-                }
-                
-                const data = await response.json();
-                return data[0]?.id || null;
-            } catch (error) {
-                console.error('Error fetching location ID:', error);
-                return null;
-            }
-        }
-
-        // API function to fetch hotels
-        async function fetchHotelsFromAPI(locationId, stateValue) {
-            try {
-                const checkIn = document.getElementById('check-in').value;
-                const checkOut = document.getElementById('check-out').value;
-                const guests = document.getElementById('guests').value;
-
-                const response = await fetch(
-                    `${API_CONFIG.baseURL}${API_CONFIG.endpoints.search}?` +
-                    `checkin_date=${checkIn}&` +
-                    `checkout_date=${checkOut}&` +
-                    `units=metric&` +
-                    `room_number=1&` +
-                    `adults_number=${guests}&` +
-                    `order_by=popularity&` +
-                    `filter_by_currency=NGN&` +
-                    `locale=en-gb&` +
-                    `location_id=${locationId}`,
-                    {
-                        method: 'GET',
-                        headers: {
-                            'X-RapidAPI-Key': API_CONFIG.apiKey,
-                            'X-RapidAPI-Host': 'booking-com.p.rapidapi.com'
-                        }
-                    }
-                );
-
-                if (!response.ok) {
-                    throw new Error('API request failed');
-                }
-
-                const data = await response.json();
-                
-                // Transform API response to match your hotel object structure
-                return data.result.map(hotel => ({
-                    id: hotel.hotel_id,
-                    name: hotel.hotel_name,
-                    location: hotel.city || stateValue,
-                    price: hotel.min_total_price || Math.floor(Math.random() * 50000) + 15000,
-                    rating: parseFloat(hotel.review_score) / 2 || 4.0,
-                    image: hotel.main_photo_url || 'https://images.unsplash.com/photo-1566073771259-6a8506099945?ixlib=rb-4.0.3&auto=format&fit=crop&w=600&q=80',
-                    description: hotel.address || `Luxury hotel in ${stateValue}`,
-                    amenities: ["Free WiFi", "Swimming Pool", "Air Conditioning"],
-                    rooms: [
-                        { type: "Standard Room", price: hotel.min_total_price || 25000, available: 5 },
-                        { type: "Deluxe Room", price: (hotel.min_total_price || 25000) + 15000, available: 3 },
-                        { type: "Suite", price: (hotel.min_total_price || 25000) + 30000, available: 2 }
-                    ]
-                }));
-            } catch (error) {
-                console.error('Error fetching hotels:', error);
-                return [];
-            }
-        }
-
-        // Updated searchHotels function with API integration
-        async function searchHotels(stateValue, destination) {
-            const searchBtn = document.querySelector('.search-btn');
-            const originalText = searchBtn.innerHTML;
-            searchBtn.innerHTML = '<span class="loading"></span> Searching...';
-            searchBtn.disabled = true;
-
-            try {
-                let hotels = [];
-                
-                // Try to use API first if API key is configured
-                if (API_CONFIG.apiKey) {
-                    const locationId = await getLocationId(destination);
-                    
-                    if (locationId) {
-                        hotels = await fetchHotelsFromAPI(locationId, stateValue);
-                    }
-                }
-                
-                // If API fails or no API key, use local data
-                if (hotels.length === 0) {
-                    hotels = getHotelsByState(stateValue);
-                    if (hotels.length === 0) {
-                        // Show message about using demo data
-                        alert('Using demo data. For real hotel data, please configure your API key.');
-                    }
-                }
-                
-                // Display the results
-                displayHotels(hotels, featuredHotels);
-                document.getElementById('home-section').scrollIntoView({ behavior: 'smooth' });
+                showNotification('Account created successfully!', 'success');
                 
             } catch (error) {
-                console.error('Search error:', error);
-                // Fallback to local data
-                const localHotels = getHotelsByState(stateValue);
-                displayHotels(localHotels, featuredHotels);
-                alert('Using local data. Please check your API configuration for live results.');
+                console.error('Signup failed:', error);
+                showNotification(error.message || 'Signup failed. Please try again.', 'error');
             } finally {
-                searchBtn.innerHTML = originalText;
-                searchBtn.disabled = false;
+                // Reset loading state
+                signupButton.classList.remove('loading');
+                signupButton.disabled = false;
             }
         }
 
-        // Function to get hotels by state (fallback)
-        function getHotelsByState(stateValue) {
-            // Filter hotels by state (simulating API call)
-            return state.nigerianHotels.filter(hotel => 
-                hotel.location.toLowerCase().includes(stateValue.toLowerCase())
-            );
+        // Update UI after successful login
+        async function updateUIAfterLogin() {
+            if (state.user) {
+                // Update user info in dashboard
+                userAvatar.textContent = state.user.name.charAt(0).toUpperCase();
+                userName.textContent = state.user.name;
+                welcomeUserName.textContent = state.user.name.split(' ')[0];
+                
+                // Show dashboard and hide login prompt
+                userDashboard.style.display = 'block';
+                loginPrompt.style.display = "none";
+                
+                // Update header
+                updateHeaderAfterLogin();
+                
+                // Load user data
+                await loadUserData();
+                
+                // Show bottom navigation on mobile and hide footer
+                if (window.innerWidth <= 768) {
+                    dashboardBottomNav.style.display = 'block';
+                }
+                footer.style.display = 'none';
+            }
         }
 
-        // Function to display hotels
-        function displayHotels(hotels, container) {
-            container.innerHTML = '';
-            
-            if (hotels.length === 0) {
-                container.innerHTML = '<p style="text-align: center; grid-column: 1 / -1; padding: 2rem;">No hotels found in this location. Please try another state.</p>';
-                return;
+        // Load user data from backend
+        async function loadUserData() {
+            try {
+                // Load user bookings
+                const bookings = await apiService.getBookings();
+                renderUserBookings(bookings);
+                
+                // Load payment methods
+                const paymentMethods = await apiService.getPaymentMethods();
+                renderPaymentMethods(paymentMethods);
+                
+                // Load recent activity
+                loadRecentActivity(bookings);
+                
+            } catch (error) {
+                console.error('Failed to load user data:', error);
+                showNotification('Failed to load user data', 'error');
             }
+        }
+
+        // Load hotels from backend
+        async function loadHotels() {
+            try {
+                const hotels = await apiService.getHotels();
+                state.hotels = hotels;
+                renderHotels();
+            } catch (error) {
+                console.error('Error loading hotels:', error);
+                // Fallback to mock data if API fails
+                state.hotels = [
+                    {
+                        id: 1,
+                        name: "The Grand Plaza",
+                        location: "New York, USA",
+                        price: 299,
+                        rating: 4.8,
+                        image: "https://images.unsplash.com/photo-1566073771259-6a8506099945?ixlib=rb-4.0.3&auto=format&fit=crop&w=500&q=80"
+                    },
+                    {
+                        id: 2,
+                        name: "Oceanview Resort",
+                        location: "Miami, USA",
+                        price: 349,
+                        rating: 4.7,
+                        image: "https://images.unsplash.com/photo-1582719508461-905c673771fd?ixlib=rb-4.0.3&auto=format&fit=crop&w=500&q=80"
+                    }
+                ];
+                renderHotels();
+            }
+        }
+
+        // Render hotels to the page
+        function renderHotels() {
+            if (!hotelGrid) return;
             
-            hotels.forEach(hotel => {
+            hotelGrid.innerHTML = '';
+            
+            state.hotels.forEach(hotel => {
                 const hotelCard = document.createElement('div');
                 hotelCard.className = 'hotel-card';
-                
                 hotelCard.innerHTML = `
-                    <div class="hotel-image">
-                        <img src="${hotel.image}" alt="${hotel.name}">
-                        <div class="hotel-badge">NIGERIA</div>
-                    </div>
-                    <div class="hotel-info">
+                    <div class="hotel-image" style="background-image: url('${hotel.image}')"></div>
+                    <div class="hotel-details">
                         <h3 class="hotel-name">${hotel.name}</h3>
                         <div class="hotel-location">
                             <i class="fas fa-map-marker-alt"></i>
                             <span>${hotel.location}</span>
                         </div>
                         <div class="hotel-rating">
-                            ${getStarRating(hotel.rating)}
-                            <span>(${hotel.rating}/5)</span>
+                            <div class="rating-stars">
+                                ${'<i class="fas fa-star"></i>'.repeat(Math.floor(hotel.rating))}
+                                ${hotel.rating % 1 !== 0 ? '<i class="fas fa-star-half-alt"></i>' : ''}
+                            </div>
+                            <span>${hotel.rating}</span>
                         </div>
-                        <p class="hotel-price">₦${hotel.price.toLocaleString()} <small>/night</small></p>
-                        <div style="display: flex; gap: 0.5rem;">
-                            <button class="btn btn-primary book-now-btn" data-hotel='${JSON.stringify(hotel)}'>
-                                Book Now
-                            </button>
-                            <button class="btn btn-outline view-details-btn" data-hotel='${JSON.stringify(hotel)}'>
-                                View Details
-                            </button>
-                        </div>
+                        <div class="hotel-price">₦${(hotel.price * 1000).toLocaleString()}/night</div>
+                        <button class="btn btn-primary" style="width: 100%;" onclick="bookHotel(${hotel.id})">
+                            <i class="fas fa-calendar-check"></i> Book Now
+                        </button>
                     </div>
                 `;
                 
-                container.appendChild(hotelCard);
+                hotelGrid.appendChild(hotelCard);
             });
             
-            // Add event listeners to book now buttons
-            document.querySelectorAll('.book-now-btn').forEach(button => {
-                button.addEventListener('click', function() {
-                    const hotel = JSON.parse(this.getAttribute('data-hotel'));
-                    openPaymentModal(hotel);
-                });
-            });
+            // Also populate featured hotels
+            const featuredHotels = document.getElementById('featuredHotels');
+            if (featuredHotels) {
+                featuredHotels.innerHTML = hotelGrid.innerHTML;
+            }
             
-            // Add event listeners to view details buttons
-            document.querySelectorAll('.view-details-btn').forEach(button => {
-                button.addEventListener('click', function() {
-                    const hotel = JSON.parse(this.getAttribute('data-hotel'));
-                    openHotelDetailsModal(hotel);
-                });
-            });
+            // Populate destination hotels
+            const destinationHotels = document.getElementById('destinationHotels');
+            if (destinationHotels) {
+                destinationHotels.innerHTML = hotelGrid.innerHTML;
+            }
+            
+            // Populate deals hotels
+            const dealsHotels = document.getElementById('dealsHotels');
+            if (dealsHotels) {
+                dealsHotels.innerHTML = hotelGrid.innerHTML;
+            }
         }
 
-        // Function to populate hotels table in dashboard
-        function populateHotelsTable() {
-            hotelsTableBody.innerHTML = '';
+        // Render user bookings
+        function renderUserBookings(bookings) {
+            const bookingsList = document.getElementById('userBookingsList');
+            if (!bookingsList) return;
             
-            state.nigerianHotels.forEach(hotel => {
-                const row = document.createElement('tr');
-                row.innerHTML = `
-                    <td>${hotel.name}</td>
-                    <td>${hotel.location}</td>
-                    <td>₦${hotel.price.toLocaleString()}</td>
-                    <td>${getStarRating(hotel.rating)} (${hotel.rating}/5)</td>
-                    <td>
-                        <button class="btn btn-outline" style="padding: 0.3rem 0.7rem; font-size: 0.9rem;" onclick="openHotelDetailsModal(${JSON.stringify(hotel).replace(/"/g, '&quot;')})">
-                            View Details
-                        </button>
-                    </td>
+            if (bookings.length === 0) {
+                bookingsList.innerHTML = `
+                    <div style="text-align: center; padding: 2rem; color: var(--gray);">
+                        <i class="fas fa-calendar-times" style="font-size: 3rem; margin-bottom: 1rem;"></i>
+                        <h3>No Bookings Yet</h3>
+                        <p>Start exploring our hotels to make your first booking!</p>
+                    </div>
                 `;
-                hotelsTableBody.appendChild(row);
-            });
-        }
-
-        // Function to generate star rating HTML
-        function getStarRating(rating) {
-            let stars = '';
-            const fullStars = Math.floor(rating);
-            const hasHalfStar = rating % 1 !== 0;
-            
-            for (let i = 0; i < fullStars; i++) {
-                stars += '<i class="fas fa-star"></i>';
-            }
-            
-            if (hasHalfStar) {
-                stars += '<i class="fas fa-star-half-alt"></i>';
-            }
-            
-            const emptyStars = 5 - Math.ceil(rating);
-            for (let i = 0; i < emptyStars; i++) {
-                stars += '<i class="far fa-star"></i>';
-            }
-            
-            return stars;
-        }
-
-        // Process payment function
-        function processPayment() {
-            if (!state.currentHotel) return;
-            
-            // Show loading state
-            const payBtn = document.querySelector('#payment-modal .btn-primary');
-            const originalText = payBtn.innerHTML;
-            payBtn.innerHTML = '<span class="loading"></span> Processing...';
-            payBtn.disabled = true;
-            
-            // Simulate payment processing
-            setTimeout(() => {
-                // Reset button
-                payBtn.innerHTML = originalText;
-                payBtn.disabled = false;
-                
-                // Close modal
-                closePaymentModal();
-                
-                // Show success message
-                alert(`Payment successful! Your booking at ${state.currentHotel.name} has been confirmed.`);
-                
-                // Reset current hotel
-                state.currentHotel = null;
-            }, 2000);
-        }
-
-        // Format date function
-        function formatDate(dateString) {
-            const options = { year: 'numeric', month: 'long', day: 'numeric' };
-            return new Date(dateString).toLocaleDateString('en-US', options);
-        }
-
-        // More hotels button functionality
-        moreHotelsBtn.addEventListener('click', function() {
-            if (!state.selectedState) {
-                alert('Please select a state first');
                 return;
             }
             
-            // Get more hotels for the selected state
-            const hotels = getHotelsByState(state.selectedState);
+            bookingsList.innerHTML = '';
             
-            // Add some additional hotels
-            const additionalHotels = [
-                {
-                    id: 7,
-                    name: "Luxury Suites",
-                    location: `${state.selectedState} City`,
-                    price: 32000,
-                    rating: 4.1,
-                    image: "https://images.unsplash.com/photo-1520250497591-112f2f40a3f4?ixlib=rb-4.0.3&auto=format&fit=crop&w=600&q=80",
-                    description: "Modern suites with all the amenities for a comfortable stay.",
-                    amenities: ["Free WiFi", "Swimming Pool", "Restaurant", "Parking"],
-                    rooms: [
-                        { type: "Standard Suite", price: 32000, available: 5 },
-                        { type: "Executive Suite", price: 45000, available: 3 }
-                    ]
+            bookings.forEach(booking => {
+                const bookingCard = document.createElement('div');
+                bookingCard.className = 'booking-card';
+                bookingCard.innerHTML = `
+                    <div class="booking-header">
+                        <div>
+                            <h4>${booking.hotelName}</h4>
+                            <p>${booking.location}</p>
+                        </div>
+                        <div class="booking-status status-confirmed">${booking.status}</div>
+                    </div>
+                    <div class="booking-dates">
+                        <div class="date-item">
+                            <div class="date-label">Check-in</div>
+                            <div class="date-value">${new Date(booking.checkIn).toLocaleDateString()}</div>
+                        </div>
+                        <div class="date-item">
+                            <div class="date-label">Check-out</div>
+                            <div class="date-value">${new Date(booking.checkOut).toLocaleDateString()}</div>
+                        </div>
+                    </div>
+                    <div style="display: flex; justify-content: space-between; align-items: center; margin-top: 1rem;">
+                        <div>
+                            <strong>₦${booking.totalAmount.toLocaleString()}</strong>
+                            <small style="display: block; color: var(--gray);">${booking.nights} nights • ${booking.guests} guests</small>
+                        </div>
+                        <button class="btn btn-outline">Manage</button>
+                    </div>
+                `;
+                
+                bookingsList.appendChild(bookingCard);
+            });
+        }
+
+        // Render payment methods
+        function renderPaymentMethods(paymentMethods) {
+            const paymentMethodsList = document.getElementById('paymentMethodsList');
+            if (!paymentMethodsList) return;
+            
+            paymentMethodsList.innerHTML = '';
+            
+            paymentMethods.forEach(method => {
+                const paymentCard = document.createElement('div');
+                paymentCard.className = 'payment-card';
+                paymentCard.innerHTML = `
+                    <div class="payment-header">
+                        <div class="payment-icon">
+                            <i class="fab fa-cc-${method.type.toLowerCase()}"></i>
+                        </div>
+                        <div>
+                            <h4>${method.type}</h4>
+                            <p>**** **** **** ${method.lastFour}</p>
+                        </div>
+                    </div>
+                    <p>Expires: ${method.expiry}</p>
+                    <button class="btn btn-outline" style="margin-top: 1rem;">Edit</button>
+                `;
+                
+                paymentMethodsList.appendChild(paymentCard);
+            });
+            
+            // Add "Add New Card" option
+            const addCard = document.createElement('div');
+            addCard.className = 'payment-card';
+            addCard.innerHTML = `
+                <div class="payment-header">
+                    <div class="payment-icon">
+                        <i class="fas fa-plus"></i>
+                    </div>
+                    <div>
+                        <h4>Add New Card</h4>
+                        <p>Add a payment method</p>
+                    </div>
+                </div>
+                <button class="btn btn-primary" style="margin-top: 1rem; width: 100%;">Add Card</button>
+            `;
+            
+            paymentMethodsList.appendChild(addCard);
+        }
+
+        // Load recent activity
+        function loadRecentActivity(bookings) {
+            const activityList = document.getElementById('recentActivityList');
+            if (!activityList) return;
+            
+            if (bookings.length === 0) {
+                activityList.innerHTML = `
+                    <div style="text-align: center; padding: 2rem; color: var(--gray);">
+                        <p>No recent activity</p>
+                    </div>
+                `;
+                return;
+            }
+            
+            // Show latest booking as recent activity
+            const latestBooking = bookings[0];
+            activityList.innerHTML = `
+                <div class="activity-item">
+                    <div class="activity-icon">
+                        <i class="fas fa-hotel"></i>
+                    </div>
+                    <div>
+                        <h4>Booking Confirmed</h4>
+                        <p>${latestBooking.hotelName} • ${new Date(latestBooking.checkIn).toLocaleDateString()}</p>
+                        <small>Recently</small>
+                    </div>
+                </div>
+            `;
+        }
+
+        // Book hotel function
+        async function bookHotel(hotelId) {
+            if (!state.user) {
+                showNotification('Please login to book a hotel', 'error');
+                openModal('login');
+                return;
+            }
+            
+            const hotel = state.hotels.find(h => h.id === hotelId);
+            if (!hotel) return;
+            
+            try {
+                // In a real implementation, you would collect booking details
+                const bookingData = {
+                    hotelId: hotel.id,
+                    checkIn: document.getElementById('check-in').value || new Date().toISOString().split('T')[0],
+                    checkOut: document.getElementById('check-out').value || new Date(Date.now() + 86400000 * 3).toISOString().split('T')[0],
+                    guests: parseInt(document.getElementById('guests').value) || 2
+                };
+                
+                await apiService.createBooking(bookingData);
+                showNotification(`Booking confirmed for ${hotel.name}!`, 'success');
+                
+                // Refresh user data
+                await loadUserData();
+                
+            } catch (error) {
+                console.error('Booking failed:', error);
+                showNotification(error.message || 'Booking failed. Please try again.', 'error');
+            }
+        }
+
+        // Update profile function
+        async function updateProfile() {
+            const name = document.getElementById('settings-name').value;
+            const email = document.getElementById('settings-email').value;
+            const phone = document.getElementById('settings-phone').value;
+            const currentPassword = document.getElementById('current-password').value;
+            const newPassword = document.getElementById('new-password').value;
+            const confirmPassword = document.getElementById('confirm-password').value;
+            
+            const profileData = {};
+            
+            if (name) profileData.name = name;
+            if (email) profileData.email = email;
+            if (phone) profileData.phone = phone;
+            
+            // Handle password change if provided
+            if (currentPassword && newPassword) {
+                if (newPassword !== confirmPassword) {
+                    showNotification('New passwords do not match', 'error');
+                    return;
                 }
-            ];
+                profileData.currentPassword = currentPassword;
+                profileData.newPassword = newPassword;
+            }
             
-            const allHotels = [...hotels, ...additionalHotels];
-            displayHotels(allHotels, featuredHotels);
+            try {
+                await apiService.updateProfile(profileData);
+                showNotification('Profile updated successfully!', 'success');
+                
+                // Update UI with new data
+                if (name) {
+                    state.user.name = name;
+                    userName.textContent = name;
+                    welcomeUserName.textContent = name.split(' ')[0];
+                    userAvatar.textContent = name.charAt(0).toUpperCase();
+                }
+                
+                // Clear password fields
+                document.getElementById('current-password').value = '';
+                document.getElementById('new-password').value = '';
+                document.getElementById('confirm-password').value = '';
+                
+            } catch (error) {
+                console.error('Profile update failed:', error);
+                showNotification(error.message || 'Profile update failed', 'error');
+            }
+        }
+
+        // Enhanced header update function
+        function updateHeaderAfterLogin() {
+            if (state.user) {
+                authButtons.innerHTML = `
+                    <div class="dropdown">
+                        <button class="btn btn-outline dropdown-toggle" onclick="toggleDropdown()">
+                            <i class="fas fa-user"></i> ${state.user.name.split(' ')[0]}
+                        </button>
+                        <div class="dropdown-menu" id="userDropdown">
+                            <a class="dropdown-item" href="#" onclick="showDashboardTab('overview')">
+                                <i class="fas fa-tachometer-alt"></i> Dashboard
+                            </a>
+                            <a class="dropdown-item" href="#" onclick="showDashboardTab('account')">
+                                <i class="fas fa-user-circle"></i> Profile
+                            </a>
+                            <div class="dropdown-divider"></div>
+                            <a class="dropdown-item text-danger" href="#" onclick="logout()">
+                                <i class="fas fa-sign-out-alt"></i> Logout
+                            </a>
+                        </div>
+                    </div>
+                `;
+            } else {
+                authButtons.innerHTML = `
+                    <button class="btn btn-outline" onclick="openModal('login')">
+                        <i class="fas fa-user"></i> Login
+                    </button>
+                    <button class="btn btn-primary" onclick="openModal('signup')">
+                        <i class="fas fa-user-plus"></i> Sign Up
+                    </button>
+                `;
+            }
+        }
+
+        // Dropdown functionality
+        function toggleDropdown() {
+            const dropdown = document.getElementById('userDropdown');
+            dropdown.classList.toggle('show');
+        }
+
+        // Close dropdown when clicking outside
+        document.addEventListener('click', function(event) {
+            if (!event.target.matches('.dropdown-toggle')) {
+                const dropdowns = document.getElementsByClassName('dropdown-menu');
+                for (let i = 0; i < dropdowns.length; i++) {
+                    const openDropdown = dropdowns[i];
+                    if (openDropdown.classList.contains('show')) {
+                        openDropdown.classList.remove('show');
+                    }
+                }
+            }
         });
 
-        // View deal button functionality
-        viewDealBtn.addEventListener('click', function() {
-            showSection('deals-section');
+        // Dashboard tab functionality
+        function showDashboardTab(tabId) {
+            // Update tabs
+            document.querySelectorAll('.dashboard-tab').forEach(tab => {
+                tab.classList.remove('active');
+                if (tab.getAttribute('data-tab') === tabId) {
+                    tab.classList.add('active');
+                }
+            });
             
-            // Display deals hotels
-            const dealsHotelsData = state.nigerianHotels.filter(hotel => hotel.price < 40000);
-            displayHotels(dealsHotelsData, dealsHotels);
+            // Update content
+            document.querySelectorAll('.dashboard-content').forEach(content => {
+                content.classList.remove('active');
+                if (content.id === tabId + '-content') {
+                    content.classList.add('active');
+                }
+            });
+            
+            // Close dropdown if open
+            const dropdown = document.getElementById('userDropdown');
+            if (dropdown) {
+                dropdown.classList.remove('show');
+            }
+            
+            // Update bottom nav
+            document.querySelectorAll('.bottom-nav-item').forEach(navItem => {
+                navItem.classList.remove('active');
+                if (navItem.getAttribute('data-tab') === tabId) {
+                    navItem.classList.add('active');
+                }
+            });
+        }
+
+        // Enhanced logout function
+        function logout() {
+            state.user = null;
+            state.token = null;
+            localStorage.removeItem('authToken');
+            
+            userDashboard.style.display = 'none';
+            loginPrompt.style.display = "block";
+            updateHeaderAfterLogin();
+            
+            // Hide bottom navigation and show footer
+            dashboardBottomNav.style.display = 'none';
+            footer.style.display = 'block';
+            
+            // Show logout message
+            showNotification('You have been logged out successfully.', 'info');
+        }
+
+        // Initialize dashboard tabs
+        document.querySelectorAll('.dashboard-tab').forEach(tab => {
+            tab.addEventListener('click', function() {
+                const tabId = this.getAttribute('data-tab');
+                showDashboardTab(tabId);
+            });
+        });
+
+        // Bottom navigation functionality
+        document.querySelectorAll('.bottom-nav-item').forEach(item => {
+            item.addEventListener('click', function(e) {
+                e.preventDefault();
+                const tabId = this.getAttribute('data-tab');
+                
+                // Update active state
+                document.querySelectorAll('.bottom-nav-item').forEach(navItem => {
+                    navItem.classList.remove('active');
+                });
+                this.classList.add('active');
+                
+                // Show the corresponding tab
+                showDashboardTab(tabId);
+            });
+        });
+
+        // Close modal when clicking outside
+        window.addEventListener('click', function(event) {
+            if (event.target === authModal) {
+                closeModal();
+            }
+        });
+
+        // Form submission
+        document.getElementById('searchForm').addEventListener('submit', function(e) {
+            e.preventDefault();
+            
+            if (!state.user) {
+                showNotification('Please login to search for hotels', 'error');
+                openModal('login');
+                return;
+            }
+            
+            const destination = document.getElementById('destination').value;
+            const checkIn = document.getElementById('check-in').value;
+            const checkOut = document.getElementById('check-out').value;
+            
+            if (!destination || !checkIn || !checkOut) {
+                showNotification('Please fill in all search fields', 'error');
+            } else {
+                showNotification(`Searching for hotels in ${destination} from ${checkIn} to ${checkOut}`, 'info');
+                // In a real app, you would make an API call here
+            }
+        });
+
+        // Order check form
+        document.getElementById('orderCheckForm').addEventListener('submit', async function(e) {
+            e.preventDefault();
+            const orderNumber = document.getElementById('order-number').value;
+            const orderEmail = document.getElementById('order-email').value;
+            
+            try {
+                const order = await apiService.getOrder(orderNumber, orderEmail);
+                document.getElementById('orderDetails').style.display = 'block';
+                document.getElementById('orderNotFound').style.display = 'none';
+                showNotification('Order found!', 'success');
+            } catch (error) {
+                document.getElementById('orderNotFound').style.display = 'block';
+                document.getElementById('orderDetails').style.display = 'none';
+                showNotification('Order not found. Please check your details.', 'error');
+            }
+        });
+
+        // Staff tabs
+        document.querySelectorAll('.staff-tab').forEach(tab => {
+            tab.addEventListener('click', function() {
+                const tabId = this.getAttribute('data-tab');
+                
+                // Update active tab
+                document.querySelectorAll('.staff-tab').forEach(t => {
+                    t.classList.remove('active');
+                });
+                this.classList.add('active');
+                
+                // Show corresponding content
+                document.querySelectorAll('.staff-content').forEach(content => {
+                    content.classList.remove('active');
+                });
+                document.getElementById('staff-' + tabId + '-content').classList.add('active');
+            });
+        });
+
+        // FAQ Accordion
+        document.querySelectorAll('.accordion-header').forEach(header => {
+            header.addEventListener('click', function() {
+                this.classList.toggle('active');
+                const content = this.nextElementSibling;
+                if (this.classList.contains('active')) {
+                    content.classList.add('active');
+                } else {
+                    content.classList.remove('active');
+                }
+            });
+        });
+
+        // Set minimum date for check-in to today
+        const today = new Date().toISOString().split('T')[0];
+        document.getElementById('check-in').setAttribute('min', today);
+        
+        document.getElementById('check-in').addEventListener('change', function() {
+            const checkInDate = this.value;
+            document.getElementById('check-out').setAttribute('min', checkInDate);
         });
 
         // Initialize page
-        window.onload = function() {
-            // Show login prompt if not logged in
-            if (!state.user) {
-                searchWidget.style.opacity = "0.7";
-                loginPrompt.style.display = "block";
+        window.onload = async function() {
+            loginPrompt.style.display = "block";
+            
+            // Check if user is already authenticated
+            await checkAuthStatus();
+            
+            // Load initial hotels
+            await loadHotels();
+            
+            // If user is logged in, populate settings form
+            if (state.user) {
+                document.getElementById('settings-name').value = state.user.name || '';
+                document.getElementById('settings-email').value = state.user.email || '';
+                document.getElementById('settings-phone').value = state.user.phone || '';
             }
-            
-            // Populate states dropdown
-            populateStates();
-            
-            // Load featured hotels (first 3 Nigerian hotels)
-            const featuredHotelsData = state.nigerianHotels.slice(0, 3);
-            displayHotels(featuredHotelsData, featuredHotels);
-            
-            // Load destination hotels (all Nigerian hotels)
-            displayHotels(state.nigerianHotels, destinationHotels);
-            
-            // Load deals hotels (hotels under 40,000 Naira)
-            const dealsHotelsData = state.nigerianHotels.filter(hotel => hotel.price < 40000);
-            displayHotels(dealsHotelsData, dealsHotels);
         };
-
-        // Accordion functionality for FAQ section
-        const accordionHeaders = document.querySelectorAll('.accordion-header');
-        accordionHeaders.forEach(header => {
-            header.addEventListener('click', () => {
-                const content = header.nextElementSibling;
-                content.classList.toggle('active');
-                
-                // Rotate icon
-                const icon = header.querySelector('i');
-                icon.classList.toggle('fa-chevron-down');
-                icon.classList.toggle('fa-chevron-up');
-            });
-        });
     </script>
 </body>
 </html>
